@@ -1,0 +1,10 @@
+
+import 'package:flutter/material.dart';
+
+abstract class AppColors {
+  static const Color mainColor=Color(0xFF121312);
+  static const Color mainText=Color(0xFFFFFFFF);
+  static const Color secondColor=Color(0xFFF6BD00);
+  static const Color mainSubText=Colors.white60;
+
+}
