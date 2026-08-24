@@ -17,9 +17,22 @@ abstract class AppStrings {
 
   static const fifthOnBoardingText = "Start Watching Now";
 
-
   static const explore = "Explore Now";
   static const next = "Next";
   static const finish = "Finish";
   static const back = "Back";
+
+  static const email = "Email";
+  static const password = "Password";
+  static const forgetPasswordAppBar = "Forget Password?";
+  static const forgetPassword = "Forget Password";
+  static const verifyEmail = "Verify Email";
+  static const login = "Login";
+  static const loginWithGoogle = "Login With Google";
+  static const register = "Register";
+  static const avatar = "Avatar";
+  static const name = "Name";
+  static const phone = "Phone Number";
+  static const confirmPassword = "Confirm Password";
+  static const createOne = "Create One";
 }

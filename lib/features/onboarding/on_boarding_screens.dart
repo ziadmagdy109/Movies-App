@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
+import 'package:movies_app/core/routing/app_route_name.dart';
 import 'package:movies_app/core/theme/app_strings.dart';
 import 'package:movies_app/features/onboarding/on_boarding_screen.dart';
+import 'package:movies_app/main.dart';
 
 class _OnBoardingData {
   final Widget image;
@@ -16,6 +18,7 @@ class _OnBoardingData {
     required this.gradient,
   });
 }
+
 LinearGradient _overlayGradient(Color base) {
   return LinearGradient(
     begin: Alignment.topCenter,
@@ -68,7 +71,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
     _OnBoardingData(
       image: Assets.images.startboarding.image(fit: BoxFit.fill),
       title: AppStrings.fifthOnBoardingText,
-      subtitle:"",
+      subtitle: "",
       gradient: _overlayGradient(const Color(0xFF121312)),
     ),
   ];
@@ -88,7 +91,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
   }
 
   void _onFinish() {
-    //Navigate to Login Screen
+    navigatorKey.currentState!.pushReplacementNamed(AppRouteName.login);
   }
 
   @override
