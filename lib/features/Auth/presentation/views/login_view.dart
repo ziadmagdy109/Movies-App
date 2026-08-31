@@ -55,7 +55,9 @@ class LoginView extends StatelessWidget {
               SizedBox(height: 34),
               CustomButton(
                 text: AppStrings.login,
-                onPressed: () {},
+                onPressed: () {
+                  navigatorKey.currentState!.pushNamed(AppRouteName.layout);
+                },
               ), // Init Nav To Main Layout
               SizedBox(height: 22),
               HaveAccount(
