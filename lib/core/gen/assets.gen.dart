@@ -26,8 +26,15 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow_back.svg
   SvgGenImage get arrowBack => const SvgGenImage('assets/icons/arrow_back.svg');
 
+  /// File path: assets/icons/browse-icon.svg
+  SvgGenImage get browseIcon =>
+      const SvgGenImage('assets/icons/browse-icon.svg');
+
   /// File path: assets/icons/email.svg
   SvgGenImage get email => const SvgGenImage('assets/icons/email.svg');
+
+  /// File path: assets/icons/home-icon.svg
+  SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home-icon.svg');
 
   /// File path: assets/icons/icon_google.svg
   SvgGenImage get iconGoogle =>
@@ -42,9 +49,17 @@ class $AssetsIconsGen {
   /// File path: assets/icons/phone.svg
   SvgGenImage get phone => const SvgGenImage('assets/icons/phone.svg');
 
+  /// File path: assets/icons/profile-icon.svg
+  SvgGenImage get profileIcon =>
+      const SvgGenImage('assets/icons/profile-icon.svg');
+
   /// File path: assets/icons/routelogo.png
   AssetGenImage get routelogo =>
       const AssetGenImage('assets/icons/routelogo.png');
+
+  /// File path: assets/icons/search-icon.svg
+  SvgGenImage get searchIcon =>
+      const SvgGenImage('assets/icons/search-icon.svg');
 
   /// File path: assets/icons/splashicon.png
   AssetGenImage get splashicon =>
@@ -58,12 +73,16 @@ class $AssetsIconsGen {
     eg,
     lr,
     arrowBack,
+    browseIcon,
     email,
+    homeIcon,
     iconGoogle,
     name,
     password,
     phone,
+    profileIcon,
     routelogo,
+    searchIcon,
     splashicon,
     visible,
   ];
