@@ -61,9 +61,7 @@ class LoginView extends StatelessWidget {
               HaveAccount(
                 text: AppStrings.createOne,
                 onCreateAccount: () {
-                  navigatorKey.currentState!.pushReplacementNamed(
-                    AppRouteName.register,
-                  );
+                  navigatorKey.currentState!.pushNamed(AppRouteName.register);
                 },
               ),
               SizedBox(height: 28),

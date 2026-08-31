@@ -41,7 +41,7 @@ class OnBoardingScreens extends StatefulWidget {
 
 class _OnBoardingScreensState extends State<OnBoardingScreens> {
   final PageController _pageController = PageController();
-  int _currentPage = 0;
+  int currentPage = 0;
 
   late final List<_OnBoardingData> _rawPages = [
     _OnBoardingData(
@@ -108,7 +108,7 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
       body: PageView.builder(
         controller: _pageController,
         itemCount: _rawPages.length,
-        onPageChanged: (index) => setState(() => _currentPage = index),
+        onPageChanged: (index) => setState(() => currentPage = index),
         itemBuilder: (context, index) {
           final bool isFirst = index == 0;
           final bool isLast = index == lastIndex;
