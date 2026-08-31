@@ -65,6 +65,9 @@ class $AssetsIconsGen {
   AssetGenImage get splashicon =>
       const AssetGenImage('assets/icons/splashicon.png');
 
+  /// File path: assets/icons/star.png
+  AssetGenImage get star => const AssetGenImage('assets/icons/star.png');
+
   /// File path: assets/icons/visible.svg
   SvgGenImage get visible => const SvgGenImage('assets/icons/visible.svg');
 
@@ -84,6 +87,7 @@ class $AssetsIconsGen {
     routelogo,
     searchIcon,
     splashicon,
+    star,
     visible,
   ];
 }
@@ -97,6 +101,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/badboys.png
   AssetGenImage get badboys => const AssetGenImage('assets/images/badboys.png');
+
+  /// File path: assets/images/empty.png
+  AssetGenImage get empty => const AssetGenImage('assets/images/empty.png');
 
   /// File path: assets/images/gamer (1)-1.png
   AssetGenImage get gamer11 =>
@@ -113,6 +120,10 @@ class $AssetsImagesGen {
   /// File path: assets/images/groupmoviesposter.png
   AssetGenImage get groupmoviesposter =>
       const AssetGenImage('assets/images/groupmoviesposter.png');
+
+  /// File path: assets/images/marvelgridimg.png
+  AssetGenImage get marvelgridimg =>
+      const AssetGenImage('assets/images/marvelgridimg.png');
 
   /// File path: assets/images/marvelimage.png
   AssetGenImage get marvelimage =>
@@ -134,10 +145,12 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
     forgotPasswordBro1,
     badboys,
+    empty,
     gamer11,
     gamer12,
     gamer1,
     groupmoviesposter,
+    marvelgridimg,
     marvelimage,
     oppenheimer,
     ratemovie,
