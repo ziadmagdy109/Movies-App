@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/widgets/custom_text_form_field.dart';
-import 'package:movies_app/core/widgets/movie_card_item.dart';
+import 'package:movies_app/core/widgets/movie_grid_item.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
