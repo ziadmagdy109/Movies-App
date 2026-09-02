@@ -95,9 +95,17 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/Available Now.png
+  AssetGenImage get availableNow =>
+      const AssetGenImage('assets/images/Available Now.png');
+
   /// File path: assets/images/Forgot password-bro 1.png
   AssetGenImage get forgotPasswordBro1 =>
       const AssetGenImage('assets/images/Forgot password-bro 1.png');
+
+  /// File path: assets/images/Watch Now.png
+  AssetGenImage get watchNow =>
+      const AssetGenImage('assets/images/Watch Now.png');
 
   /// File path: assets/images/badboys.png
   AssetGenImage get badboys => const AssetGenImage('assets/images/badboys.png');
@@ -143,7 +151,9 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
+    availableNow,
     forgotPasswordBro1,
+    watchNow,
     badboys,
     empty,
     gamer11,
