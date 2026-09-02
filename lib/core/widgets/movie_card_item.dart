@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/gen/assets.gen.dart';
+import '../gen/assets.gen.dart';
 
 class MovieGridItem extends StatelessWidget {
   const MovieGridItem({super.key});
@@ -9,26 +9,11 @@ class MovieGridItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(14),
+      borderRadius: BorderRadius.circular(14.r),
       child: Stack(
         fit: StackFit.expand,
         children: [
           Assets.images.marvelgridimg.image(fit: BoxFit.cover),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 90.h,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                  ],
-                ),
-              ),
-            ),
-          ),
           Positioned(
             top: 8.h,
             left: 8.w,
@@ -38,7 +23,7 @@ class MovieGridItem extends StatelessWidget {
                 color: Colors.black.withOpacity(0.75),
                 borderRadius: BorderRadius.circular(8.r),
               ),
-              child:  Row(
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
@@ -50,7 +35,7 @@ class MovieGridItem extends StatelessWidget {
                     ),
                   ),
                   SizedBox(width: 3),
-                  Assets.icons.star.image(width: 15.w,height: 15.h),
+                  Assets.icons.star.image(width: 15.w, height: 15.h),
                 ],
               ),
             ),
