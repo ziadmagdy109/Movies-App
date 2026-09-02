@@ -45,7 +45,7 @@ abstract class AppRoutes {
       case AppRouteName.search:
         return MaterialPageRoute(builder: (context) => const SearchView());
       case AppRouteName.browse:
-        return MaterialPageRoute(builder: (context) => const BrowseView());
+        return MaterialPageRoute(builder: (context) => BrowseView());
       case AppRouteName.profile:
         return MaterialPageRoute(builder: (context) => const ProfileView());
       default:
