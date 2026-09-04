@@ -23,6 +23,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/LR.svg
   SvgGenImage get lr => const SvgGenImage('assets/icons/LR.svg');
 
+  /// File path: assets/icons/User.svg
+  SvgGenImage get user => const SvgGenImage('assets/icons/User.svg');
+
   /// File path: assets/icons/arrow_back.svg
   SvgGenImage get arrowBack => const SvgGenImage('assets/icons/arrow_back.svg');
 
@@ -62,6 +65,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/password.svg
   SvgGenImage get password => const SvgGenImage('assets/icons/password.svg');
 
+  /// File path: assets/icons/phone-user.svg
+  SvgGenImage get phoneUser => const SvgGenImage('assets/icons/phone-user.svg');
+
   /// File path: assets/icons/phone.svg
   SvgGenImage get phone => const SvgGenImage('assets/icons/phone.svg');
 
@@ -91,6 +97,7 @@ class $AssetsIconsGen {
   List<dynamic> get values => [
     eg,
     lr,
+    user,
     arrowBack,
     bookMark,
     browseIcon,
@@ -103,6 +110,7 @@ class $AssetsIconsGen {
     name,
     openTrial,
     password,
+    phoneUser,
     phone,
     profileIcon,
     routelogo,
