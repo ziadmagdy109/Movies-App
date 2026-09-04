@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
-import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/core/widgets/movie_grid_item.dart';
 import 'package:movies_app/features/Home/presentation/widgets/action_see_more.dart';
 

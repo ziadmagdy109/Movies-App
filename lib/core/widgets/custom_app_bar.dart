@@ -20,7 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       leadingWidth: 38,
       leading: GestureDetector(
-        onTap: navigatorKey.currentState!.pop,
+        onTap: () => navigatorKey.currentState!.pop(),
         child: Padding(
           padding: const EdgeInsets.only(left: 16),
           child: leading,
@@ -30,6 +30,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? null
           : Text(title!, style: TextStyle(color: AppColors.secondColor)),
       actions: actions,
+      actionsPadding: const EdgeInsets.only(right: 16),
     );
   }
 }

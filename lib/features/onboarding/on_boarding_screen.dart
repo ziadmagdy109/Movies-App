@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/features/onboarding/widgets/on_boarding_modal_bottom.dart';
+import 'package:movies_app/features/OnBoarding/widgets/on_boarding_modal_bottom.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   final Widget image;
@@ -20,7 +20,7 @@ class OnBoardingScreen extends StatelessWidget {
     required this.onNext,
     this.showBackButton = false,
     this.onBack,
-    this.isLast=false
+    this.isLast = false,
   });
 
   @override
@@ -29,9 +29,7 @@ class OnBoardingScreen extends StatelessWidget {
       fit: StackFit.expand,
       children: [
         image,
-        Container(
-          decoration: BoxDecoration(gradient: gradient),
-        ),
+        Container(decoration: BoxDecoration(gradient: gradient)),
 
         Positioned(
           left: 0,

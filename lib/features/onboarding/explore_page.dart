@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
 import 'package:movies_app/core/theme/app_strings.dart';
-import 'package:movies_app/features/onboarding/widgets/button.dart';
+import 'package:movies_app/features/OnBoarding/widgets/button.dart';
 import 'package:movies_app/main.dart';
 
 import '../../core/theme/app_colors.dart';
@@ -23,11 +23,7 @@ class ExplorePage extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
-              colors: [
-                Color(0x001E1E1E),
-                Color(0xCC121312),
-                Color(0xFF121312),
-              ],
+              colors: [Color(0x001E1E1E), Color(0xCC121312), Color(0xFF121312)],
               stops: [0.0, 0.5, 0.91],
             ),
           ),
@@ -61,7 +57,9 @@ class ExplorePage extends StatelessWidget {
               Button(
                 text: AppStrings.explore,
                 onPressed: () {
-                navigatorKey.currentState!.pushReplacementNamed(AppRouteName.onBoarding);
+                  navigatorKey.currentState!.pushReplacementNamed(
+                    AppRouteName.onBoarding,
+                  );
                 },
               ),
             ],

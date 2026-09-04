@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/core/theme/app_strings.dart';
-import 'package:movies_app/features/onboarding/widgets/button.dart';
+import 'package:movies_app/features/OnBoarding/widgets/button.dart';
 
 class OnBoardingModalBottom extends StatelessWidget {
   final String title;
@@ -18,7 +18,7 @@ class OnBoardingModalBottom extends StatelessWidget {
     required this.onNext,
     this.showBackButton = false,
     this.onBack,
-    this.isLast=false,
+    this.isLast = false,
   });
 
   @override
@@ -58,32 +58,36 @@ class OnBoardingModalBottom extends StatelessWidget {
           const SizedBox(height: 24),
 
           Button(
-            text: isLast?AppStrings.finish:AppStrings.next,
+            text: isLast ? AppStrings.finish : AppStrings.next,
             onPressed: onNext,
           ),
-            const SizedBox(height: 12),
+          const SizedBox(height: 12),
 
-          showBackButton? GestureDetector(
-              onTap: onBack,
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: AppColors.mainColor,
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: AppColors.secondColor, width: 1.5),
-                ),
-                child: Text(
-                  AppStrings.back,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: AppColors.secondColor,
-                    fontWeight: FontWeight.bold,
+          showBackButton
+              ? GestureDetector(
+                  onTap: onBack,
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColors.mainColor,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: AppColors.secondColor,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Text(
+                      AppStrings.back,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: AppColors.secondColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ):SizedBox(),
-
+                )
+              : SizedBox(),
         ],
       ),
     );

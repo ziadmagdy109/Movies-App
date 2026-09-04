@@ -6,10 +6,10 @@ import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/features/Home/presentation/views/home_view.dart';
 import 'package:movies_app/features/Layout/presentation/cubit/layout_cubit.dart';
 import 'package:movies_app/features/Layout/presentation/widgets/navigator_tap_widget.dart';
-import 'package:movies_app/features/browse/presentation/cubit/browse_cubit.dart';
-import 'package:movies_app/features/browse/presentation/views/browse_view.dart';
-import 'package:movies_app/features/profile/presentation/views/profile_view.dart';
-import 'package:movies_app/features/search/presentation/views/search_view.dart';
+import 'package:movies_app/features/Browse/presentation/cubit/browse_cubit.dart';
+import 'package:movies_app/features/Browse/presentation/views/browse_view.dart';
+import 'package:movies_app/features/Profile/presentation/views/profile_view.dart';
+import 'package:movies_app/features/Search/presentation/views/search_view.dart';
 
 class LayoutView extends StatelessWidget {
   final tabs = [

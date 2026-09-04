@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
 import 'package:movies_app/core/theme/app_strings.dart';
-import 'package:movies_app/features/onboarding/on_boarding_screen.dart';
+import 'package:movies_app/features/OnBoarding/on_boarding_screen.dart';
 import 'package:movies_app/main.dart';
 
 class _OnBoardingData {
