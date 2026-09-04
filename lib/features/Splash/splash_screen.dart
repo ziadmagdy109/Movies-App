@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
+import 'package:movies_app/core/routing/app_route_name.dart';
+import 'package:movies_app/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,9 +16,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Timer(Duration(seconds: 4), () {
-    //   navigatorKey.currentState!.pushReplacementNamed(AppRouteName.explore);
-    // });
+    Future.delayed(const Duration(seconds: 4), () {
+      navigatorKey.currentState!.pushReplacementNamed(AppRouteName.explore);
+    });
   }
 
   @override

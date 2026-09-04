@@ -11,6 +11,7 @@ import 'package:movies_app/features/MovieDetails/presentation/views/movie_detail
 import 'package:movies_app/features/OnBoarding/explore_page.dart';
 import 'package:movies_app/features/OnBoarding/on_boarding_screens.dart';
 import 'package:movies_app/features/Profile/presentation/views/profile_view.dart';
+import 'package:movies_app/features/Profile/presentation/views/update_profile_view.dart';
 import 'package:movies_app/features/Search/presentation/views/search_view.dart';
 
 import '../../features/Splash/splash_screen.dart';
@@ -52,6 +53,10 @@ abstract class AppRoutes {
       case AppRouteName.movieDetails:
         return MaterialPageRoute(
           builder: (context) => const MovieDetailsView(),
+        );
+      case AppRouteName.updateProfile:
+        return MaterialPageRoute(
+          builder: (context) => const UpdateProfileView(),
         );
       default:
         return null;
