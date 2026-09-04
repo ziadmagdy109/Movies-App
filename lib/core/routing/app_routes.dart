@@ -6,13 +6,14 @@ import 'package:movies_app/features/Auth/presentation/views/register_view.dart';
 import 'package:movies_app/features/Home/presentation/views/home_view.dart';
 import 'package:movies_app/features/Layout/presentation/cubit/layout_cubit.dart';
 import 'package:movies_app/features/Layout/presentation/views/layout_view.dart';
-import 'package:movies_app/features/browse/presentation/views/browse_view.dart';
-import 'package:movies_app/features/onboarding/explore_page.dart';
-import 'package:movies_app/features/onboarding/on_boarding_screens.dart';
-import 'package:movies_app/features/profile/presentation/views/profile_view.dart';
-import 'package:movies_app/features/search/presentation/views/search_view.dart';
+import 'package:movies_app/features/Browse/presentation/views/browse_view.dart';
+import 'package:movies_app/features/MovieDetails/presentation/views/movie_details_view.dart';
+import 'package:movies_app/features/OnBoarding/explore_page.dart';
+import 'package:movies_app/features/OnBoarding/on_boarding_screens.dart';
+import 'package:movies_app/features/Profile/presentation/views/profile_view.dart';
+import 'package:movies_app/features/Search/presentation/views/search_view.dart';
 
-import '../../features/splashscreen/splash_screen.dart';
+import '../../features/Splash/splash_screen.dart';
 import 'app_route_name.dart';
 
 abstract class AppRoutes {
@@ -48,6 +49,10 @@ abstract class AppRoutes {
         return MaterialPageRoute(builder: (context) => BrowseView());
       case AppRouteName.profile:
         return MaterialPageRoute(builder: (context) => const ProfileView());
+      case AppRouteName.movieDetails:
+        return MaterialPageRoute(
+          builder: (context) => const MovieDetailsView(),
+        );
       default:
         return null;
     }

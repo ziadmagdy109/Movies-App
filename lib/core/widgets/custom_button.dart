@@ -46,7 +46,11 @@ class CustomButton extends StatelessWidget {
             if (icon != null) ...[icon!, const SizedBox(width: 8)],
             Text(
               text,
-              style: theme.textTheme.titleLarge!.copyWith(height: 1.2),
+              style: theme.textTheme.titleLarge!.copyWith(
+                height: 1.2,
+                color: textColor,
+                fontWeight: FontWeight(700),
+              ),
             ),
           ],
         ),

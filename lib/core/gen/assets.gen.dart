@@ -26,12 +26,25 @@ class $AssetsIconsGen {
   /// File path: assets/icons/arrow_back.svg
   SvgGenImage get arrowBack => const SvgGenImage('assets/icons/arrow_back.svg');
 
+  /// File path: assets/icons/book-mark.svg
+  SvgGenImage get bookMark => const SvgGenImage('assets/icons/book-mark.svg');
+
   /// File path: assets/icons/browse-icon.svg
   SvgGenImage get browseIcon =>
       const SvgGenImage('assets/icons/browse-icon.svg');
 
+  /// File path: assets/icons/clock.svg
+  SvgGenImage get clock => const SvgGenImage('assets/icons/clock.svg');
+
   /// File path: assets/icons/email.svg
   SvgGenImage get email => const SvgGenImage('assets/icons/email.svg');
+
+  /// File path: assets/icons/favourite.svg
+  SvgGenImage get favourite => const SvgGenImage('assets/icons/favourite.svg');
+
+  /// File path: assets/icons/gredient-details-view.png
+  AssetGenImage get gredientDetailsView =>
+      const AssetGenImage('assets/icons/gredient-details-view.png');
 
   /// File path: assets/icons/home-icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home-icon.svg');
@@ -42,6 +55,9 @@ class $AssetsIconsGen {
 
   /// File path: assets/icons/name.svg
   SvgGenImage get name => const SvgGenImage('assets/icons/name.svg');
+
+  /// File path: assets/icons/open-trial.svg
+  SvgGenImage get openTrial => const SvgGenImage('assets/icons/open-trial.svg');
 
   /// File path: assets/icons/password.svg
   SvgGenImage get password => const SvgGenImage('assets/icons/password.svg');
@@ -65,8 +81,8 @@ class $AssetsIconsGen {
   AssetGenImage get splashicon =>
       const AssetGenImage('assets/icons/splashicon.png');
 
-  /// File path: assets/icons/star.png
-  AssetGenImage get star => const AssetGenImage('assets/icons/star.png');
+  /// File path: assets/icons/star.svg
+  SvgGenImage get star => const SvgGenImage('assets/icons/star.svg');
 
   /// File path: assets/icons/visible.svg
   SvgGenImage get visible => const SvgGenImage('assets/icons/visible.svg');
@@ -76,11 +92,16 @@ class $AssetsIconsGen {
     eg,
     lr,
     arrowBack,
+    bookMark,
     browseIcon,
+    clock,
     email,
+    favourite,
+    gredientDetailsView,
     homeIcon,
     iconGoogle,
     name,
+    openTrial,
     password,
     phone,
     profileIcon,
@@ -106,6 +127,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/Watch Now.png
   AssetGenImage get watchNow =>
       const AssetGenImage('assets/images/Watch Now.png');
+
+  /// File path: assets/images/actor.png
+  AssetGenImage get actor => const AssetGenImage('assets/images/actor.png');
 
   /// File path: assets/images/badboys.png
   AssetGenImage get badboys => const AssetGenImage('assets/images/badboys.png');
@@ -145,6 +169,10 @@ class $AssetsImagesGen {
   AssetGenImage get ratemovie =>
       const AssetGenImage('assets/images/ratemovie.png');
 
+  /// File path: assets/images/screenshot1.png
+  AssetGenImage get screenshot1 =>
+      const AssetGenImage('assets/images/screenshot1.png');
+
   /// File path: assets/images/startboarding.png
   AssetGenImage get startboarding =>
       const AssetGenImage('assets/images/startboarding.png');
@@ -154,6 +182,7 @@ class $AssetsImagesGen {
     availableNow,
     forgotPasswordBro1,
     watchNow,
+    actor,
     badboys,
     empty,
     gamer11,
@@ -164,6 +193,7 @@ class $AssetsImagesGen {
     marvelimage,
     oppenheimer,
     ratemovie,
+    screenshot1,
     startboarding,
   ];
 }
