@@ -42,8 +42,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/email.svg
   SvgGenImage get email => const SvgGenImage('assets/icons/email.svg');
 
+  /// File path: assets/icons/exit.png
+  AssetGenImage get exit => const AssetGenImage('assets/icons/exit.png');
+
   /// File path: assets/icons/favourite.svg
   SvgGenImage get favourite => const SvgGenImage('assets/icons/favourite.svg');
+
+  /// File path: assets/icons/folder.svg
+  SvgGenImage get folder => const SvgGenImage('assets/icons/folder.svg');
 
   /// File path: assets/icons/gredient-details-view.png
   AssetGenImage get gredientDetailsView =>
@@ -55,6 +61,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/icon_google.svg
   SvgGenImage get iconGoogle =>
       const SvgGenImage('assets/icons/icon_google.svg');
+
+  /// File path: assets/icons/list.svg
+  SvgGenImage get list => const SvgGenImage('assets/icons/list.svg');
 
   /// File path: assets/icons/name.svg
   SvgGenImage get name => const SvgGenImage('assets/icons/name.svg');
@@ -103,10 +112,13 @@ class $AssetsIconsGen {
     browseIcon,
     clock,
     email,
+    exit,
     favourite,
+    folder,
     gredientDetailsView,
     homeIcon,
     iconGoogle,
+    list,
     name,
     openTrial,
     password,
