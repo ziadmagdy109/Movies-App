@@ -20,15 +20,19 @@ class GoogleSignInCubit extends Cubit<GoogleSignInState> {
   GoogleSignInCubit() : super(GoogleSignInInitial());
 
   final FireBaseServices _services = FireBaseServices();
-
   Future<void> signInWithGoogle() async {
     emit(GoogleSignInLoading());
 
-    final userCredential = await _services.signInWithGoogle();
-    if (userCredential != null) {
-      emit(GoogleSignInSuccess());
-    } else {
-      emit(GoogleSignInInitial());
+    try {
+      final userCredential = await _services.signInWithGoogle();
+
+      if (userCredential != null) {
+        emit(GoogleSignInSuccess());
+      } else {
+        emit(GoogleSignInError('Google Sign-In was cancelled or failed'));
+      }
+    } catch (e) {
+      emit(GoogleSignInError(e.toString()));
     }
   }
 }

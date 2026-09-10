@@ -95,7 +95,7 @@ class FireBaseServices {
           textColor: Colors.white,
         );
       }
-      return null; // cancellation -> silently return null, no toast
+      return null;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(
         msg: e.message ?? "Error signing in with Google",
