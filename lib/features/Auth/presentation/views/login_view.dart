@@ -17,6 +17,7 @@ import 'package:movies_app/main.dart';
 
 import '../../../../core/utils/validation_rules.dart';
 import '../cubit/google_signin_cubit.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
 
@@ -25,17 +26,18 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final _formKey = GlobalKey<FormState>(); 
-  final _emailController= TextEditingController();
-  final _passwordController= TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _obscurePassword = true;
   final _validationRules = ValidationRules();
-@override
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
+
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       //Call cubit here
@@ -45,6 +47,7 @@ class _LoginViewState extends State<LoginView> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -72,8 +75,10 @@ class _LoginViewState extends State<LoginView> {
                   prefixIcon: Assets.icons.password.svg(height: 20, width: 20),
                   hintText: AppStrings.password,
                   suffixIcon: IconButton(
-                    icon: _obscurePassword ? Assets.icons.closeeye.svg(width: 24.w,height: 24.h) : Assets.icons.eye.svg(width: 24.w,height: 24.h),
-                      color: AppColors.secondColor,
+                    icon: _obscurePassword
+                        ? Assets.icons.closeeye.svg(width: 24.w, height: 24.h)
+                        : Assets.icons.eye.svg(width: 24.w, height: 24.h),
+                    color: AppColors.secondColor,
                     onPressed: () {
                       setState(() {
                         _obscurePassword = !_obscurePassword;
@@ -101,14 +106,16 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(height: 34),
                 BlocConsumer<SignInCubit, SignInState>(
                   listener: (context, state) async {
-                    if(state is SignInLoading) {
+                    if (state is SignInLoading) {
                       await EasyLoading.show(status: 'Loading...');
                     }
                     if (state is SignInSuccess) {
                       EasyLoading.dismiss();
-                      navigatorKey.currentState!.pushReplacementNamed(AppRouteName.layout);
+                      navigatorKey.currentState!.pushReplacementNamed(
+                        AppRouteName.layout,
+                      );
                       Fluttertoast.showToast(
-                        msg:"Successfully Login" ,
+                        msg: "Successfully Login",
                         gravity: ToastGravity.TOP,
                         backgroundColor: Colors.green,
                         textColor: Colors.white,
@@ -148,7 +155,9 @@ class _LoginViewState extends State<LoginView> {
                     }
                     if (state is GoogleSignInSuccess) {
                       EasyLoading.dismiss();
-                      navigatorKey.currentState!.pushReplacementNamed(AppRouteName.layout);
+                      navigatorKey.currentState!.pushReplacementNamed(
+                        AppRouteName.layout,
+                      );
                     }
                     if (state is GoogleSignInError) {
                       EasyLoading.dismiss();
@@ -172,6 +181,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 SizedBox(height: 34),
                 LanguageSwitcher(),
+                SizedBox(height: 34),
               ],
             ),
           ),
