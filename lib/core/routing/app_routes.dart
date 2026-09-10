@@ -14,6 +14,10 @@ import 'package:movies_app/features/Profile/presentation/views/profile_view.dart
 import 'package:movies_app/features/Profile/presentation/views/update_profile_view.dart';
 import 'package:movies_app/features/Search/presentation/views/search_view.dart';
 
+import '../../features/Auth/presentation/cubit/forget_password_cubit.dart';
+import '../../features/Auth/presentation/cubit/google_signin_cubit.dart';
+import '../../features/Auth/presentation/cubit/signin_cubit.dart';
+import '../../features/Auth/presentation/cubit/signup_cubit.dart';
 import '../../features/Splash/splash_screen.dart';
 import 'app_route_name.dart';
 
@@ -30,13 +34,17 @@ abstract class AppRoutes {
       case AppRouteName.explore:
         return MaterialPageRoute(builder: (context) => const ExplorePage());
       case AppRouteName.login:
-        return MaterialPageRoute(builder: (context) => const LoginView());
+        return MaterialPageRoute(builder: (context) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => SignInCubit()),
+            BlocProvider(create: (context) => GoogleSignInCubit()),
+          ],
+          child: const LoginView(),
+        ));
       case AppRouteName.register:
-        return MaterialPageRoute(builder: (context) => const RegisterView());
+        return MaterialPageRoute(builder: (context) => BlocProvider(create: (context) => SignUpCubit(), child: const RegisterView()));
       case AppRouteName.forgetPassword:
-        return MaterialPageRoute(
-          builder: (context) => const ForgetPasswordView(),
-        );
+        return MaterialPageRoute(builder: (context) => BlocProvider(create: (context) => ForgetPasswordCubit(), child: const ForgetPasswordView()));
       case AppRouteName.layout:
         return MaterialPageRoute(
           builder: (context) =>

@@ -39,11 +39,17 @@ class $AssetsIconsGen {
   /// File path: assets/icons/clock.svg
   SvgGenImage get clock => const SvgGenImage('assets/icons/clock.svg');
 
+  /// File path: assets/icons/closeeye.svg
+  SvgGenImage get closeeye => const SvgGenImage('assets/icons/closeeye.svg');
+
   /// File path: assets/icons/email.svg
   SvgGenImage get email => const SvgGenImage('assets/icons/email.svg');
 
   /// File path: assets/icons/exit.png
   AssetGenImage get exit => const AssetGenImage('assets/icons/exit.png');
+
+  /// File path: assets/icons/eye.svg
+  SvgGenImage get eye => const SvgGenImage('assets/icons/eye.svg');
 
   /// File path: assets/icons/favourite.svg
   SvgGenImage get favourite => const SvgGenImage('assets/icons/favourite.svg');
@@ -111,8 +117,10 @@ class $AssetsIconsGen {
     bookMark,
     browseIcon,
     clock,
+    closeeye,
     email,
     exit,
+    eye,
     favourite,
     folder,
     gredientDetailsView,

@@ -1,41 +1,41 @@
 class ValidationRules {
   String? name(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return "NAME_IS_REQUIRED";
+      return "Name is required";
     }
     return null;
   }
 
-  String? fullname(String? value) {
+  String? fullName(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return "FULL_NAME_IS_REQUIRED";
+      return "Full name is required";
     }
     return null;
   }
 
   String? phone(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return "PHONE_IS_REQUIRED";
+      return "Phone number is required";
     }
     return null;
   }
 
   String? otp(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return "OTP_IS_REQUIRED";
+      return "OTP is required";
     }
     return null;
   }
 
   String? email(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return "EMAIL_IS_REQUIRED";
+      return "Email is required";
     }
 
     final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if (!emailRegex.hasMatch(value.trim())) {
-      return "ENTER_A_VALID_EMAIL";
+      return "Enter a valid email";
     }
 
     return null;
@@ -43,11 +43,23 @@ class ValidationRules {
 
   String? password(String? value) {
     if (value == null || value.isEmpty) {
-      return "PASSWORD_IS_REQUIRED";
+      return "Password is required";
     }
 
     if (value.length < 6) {
-      return "PASSWORD_MUST_BE_AT_LEAST_6_CHARACTERS";
+      return "Password must be at least 6 characters";
+    }
+
+    return null;
+  }
+
+  String? confirmPassword(String? value, String password) {
+    if (value == null || value.isEmpty) {
+      return "Password is required";
+    }
+
+    if (value != password) {
+      return "Passwords do not match";
     }
 
     return null;
