@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
+import 'package:movies_app/features/Home/data/repository/movies_repository.dart';
+import 'package:movies_app/features/Home/data/service/movies_web_service.dart';
+import 'package:movies_app/features/Home/presentation/cubit/movies_cubit.dart';
 import 'package:movies_app/features/Home/presentation/views/home_view.dart';
 import 'package:movies_app/features/Layout/presentation/cubit/layout_cubit.dart';
 import 'package:movies_app/features/Layout/presentation/widgets/navigator_tap_widget.dart';
@@ -18,6 +21,10 @@ class LayoutView extends StatelessWidget {
     Assets.icons.browseIcon.svg(),
     Assets.icons.profileIcon.svg(),
   ];
+
+  MoviesRepository moviesRepository = MoviesRepository(
+    moviesWebService: MoviesWebService(),
+  );
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LayoutCubit, int>(
@@ -28,7 +35,11 @@ class LayoutView extends StatelessWidget {
             body: IndexedStack(
               index: currentIndex,
               children: [
-                HomeView(),
+                BlocProvider(
+                  create: (BuildContext context) =>
+                      MoviesCubit(moviesRepository: moviesRepository),
+                  child: HomeView(),
+                ),
                 SearchView(),
                 BlocProvider(
                   create: (context) => BrowseCubit(),

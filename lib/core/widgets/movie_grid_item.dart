@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
+import 'package:movies_app/features/Home/data/models/movies.dart';
 import 'package:movies_app/main.dart';
 
 import '../gen/assets.gen.dart';
 
 class MovieGridItem extends StatelessWidget {
-  const MovieGridItem({super.key});
+  final Movies? movies;
+  const MovieGridItem({super.key, this.movies});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,9 @@ class MovieGridItem extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Assets.images.marvelgridimg.image(fit: BoxFit.cover),
+            movies?.largeCoverImage.isNotEmpty == true
+                ? Image.network(movies!.largeCoverImage, fit: BoxFit.cover)
+                : const Placeholder(),
             Positioned(
               top: 8.h,
               left: 8.w,
@@ -33,7 +37,7 @@ class MovieGridItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '7.7',
+                      movies?.rating.toString() ?? '',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
