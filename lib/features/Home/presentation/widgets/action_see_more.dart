@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
 
 class ActionSeeMore extends StatelessWidget {
-  const ActionSeeMore({super.key});
+  final String category;
+  const ActionSeeMore({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class ActionSeeMore extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "Action",
+          category,
           style: theme.textTheme.titleLarge?.copyWith(color: AppColors.white),
         ),
         TextButton(
@@ -21,7 +22,7 @@ class ActionSeeMore extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'See More',
+                "See More",
                 style: theme.textTheme.titleMedium?.copyWith(
                   color: AppColors.secondColor,
                 ),

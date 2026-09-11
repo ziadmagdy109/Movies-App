@@ -5,8 +5,13 @@ class MoviesRepository {
   final MoviesWebService moviesWebService;
   MoviesRepository({required this.moviesWebService});
 
-  Future<List<Movies>> getMovies() async {
-    final movies = await moviesWebService.getMovies();
+  Future<List<Movies>> getAllMovies() async {
+    final movies = await moviesWebService.getAllMovies();
+    return movies.map((movie) => Movies.fromJson(movie)).toList();
+  }
+
+  Future<List<Movies>> getMoviesByGenre(String genre) async {
+    final movies = await moviesWebService.getMoviesByGenre(genre);
     return movies.map((movie) => Movies.fromJson(movie)).toList();
   }
 }

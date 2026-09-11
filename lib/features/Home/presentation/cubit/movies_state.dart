@@ -10,8 +10,17 @@ class moviesLoading extends MoviesState {}
 
 class moviesLoaded extends MoviesState {
   final List<Movies> allMovies;
+  final List<Movies> categoryMovies;
+  final String category;
 
-  moviesLoaded({required this.allMovies});
+  moviesLoaded({
+    required this.allMovies,
+    required this.category,
+    required this.categoryMovies,
+  });
 }
 
-class moviesFailure extends MoviesState {}
+class moviesFailure extends MoviesState {
+  String msg;
+  moviesFailure({required this.msg});
+}

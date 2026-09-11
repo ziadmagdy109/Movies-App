@@ -3,6 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/Auth/presentation/views/forget_password_view.dart';
 import 'package:movies_app/features/Auth/presentation/views/login_view.dart';
 import 'package:movies_app/features/Auth/presentation/views/register_view.dart';
+import 'package:movies_app/features/Home/data/repository/movies_repository.dart';
+import 'package:movies_app/features/Home/data/service/movies_web_service.dart';
+import 'package:movies_app/features/Home/presentation/cubit/movies_cubit.dart';
 import 'package:movies_app/features/Home/presentation/views/home_view.dart';
 import 'package:movies_app/features/Layout/presentation/cubit/layout_cubit.dart';
 import 'package:movies_app/features/Layout/presentation/views/layout_view.dart';
@@ -34,21 +37,44 @@ abstract class AppRoutes {
       case AppRouteName.explore:
         return MaterialPageRoute(builder: (context) => const ExplorePage());
       case AppRouteName.login:
-        return MaterialPageRoute(builder: (context) => MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => SignInCubit()),
-            BlocProvider(create: (context) => GoogleSignInCubit()),
-          ],
-          child: const LoginView(),
-        ));
+        return MaterialPageRoute(
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => SignInCubit()),
+              BlocProvider(create: (context) => GoogleSignInCubit()),
+            ],
+            child: const LoginView(),
+          ),
+        );
       case AppRouteName.register:
-        return MaterialPageRoute(builder: (context) => BlocProvider(create: (context) => SignUpCubit(), child: const RegisterView()));
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => SignUpCubit(),
+            child: const RegisterView(),
+          ),
+        );
       case AppRouteName.forgetPassword:
-        return MaterialPageRoute(builder: (context) => BlocProvider(create: (context) => ForgetPasswordCubit(), child: const ForgetPasswordView()));
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => ForgetPasswordCubit(),
+            child: const ForgetPasswordView(),
+          ),
+        );
       case AppRouteName.layout:
         return MaterialPageRoute(
-          builder: (context) =>
-              BlocProvider(create: (_) => LayoutCubit(), child: LayoutView()),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => LayoutCubit()),
+              BlocProvider(
+                create: (_) => MoviesCubit(
+                  moviesRepository: MoviesRepository(
+                    moviesWebService: MoviesWebService(),
+                  ),
+                )..getMovies("Action"),
+              ),
+            ],
+            child: LayoutView(),
+          ),
         );
       case AppRouteName.home:
         return MaterialPageRoute(builder: (context) => const HomeView());

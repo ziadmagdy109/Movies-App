@@ -23,7 +23,7 @@ class MovieGridItem extends StatelessWidget {
           children: [
             movies?.largeCoverImage.isNotEmpty == true
                 ? Image.network(movies!.largeCoverImage, fit: BoxFit.cover)
-                : const Placeholder(),
+                : Assets.images.marvelgridimg.image(),
             Positioned(
               top: 8.h,
               left: 8.w,

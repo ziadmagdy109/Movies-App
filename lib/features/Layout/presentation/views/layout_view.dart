@@ -35,11 +35,7 @@ class LayoutView extends StatelessWidget {
             body: IndexedStack(
               index: currentIndex,
               children: [
-                BlocProvider(
-                  create: (BuildContext context) =>
-                      MoviesCubit(moviesRepository: moviesRepository),
-                  child: HomeView(),
-                ),
+                HomeView(),
                 SearchView(),
                 BlocProvider(
                   create: (context) => BrowseCubit(),
@@ -62,6 +58,10 @@ class LayoutView extends StatelessWidget {
                   children: List.generate(tabs.length, (index) {
                     return NavigatorTapWidget(
                       onTap: () {
+                        if (index == 0 && currentIndex != 0) {
+                          context.read<MoviesCubit>().getNextCategoryMovies();
+                        }
+
                         context.read<LayoutCubit>().changeIndex(index);
                       },
                       isSelected: currentIndex == index,

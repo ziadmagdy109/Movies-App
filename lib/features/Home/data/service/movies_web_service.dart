@@ -14,9 +14,23 @@ class MoviesWebService {
     dio = Dio(options);
   }
 
-  Future<List<dynamic>> getMovies() async {
+  Future<List<dynamic>> getAllMovies() async {
     try {
       Response response = await dio.get(ApiList.listMovies);
+      print(response.data.toString());
+      return response.data["data"]["movies"];
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<dynamic>> getMoviesByGenre(String genre) async {
+    try {
+      Response response = await dio.get(
+        ApiList.listMovies,
+        queryParameters: {'genre': genre},
+      );
       print(response.data.toString());
       return response.data["data"]["movies"];
     } catch (e) {
