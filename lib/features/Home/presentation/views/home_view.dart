@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
+import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/core/widgets/movie_grid_item.dart';
-import 'package:movies_app/features/Home/data/models/movies.dart';
 import 'package:movies_app/features/Home/presentation/cubit/movies_cubit.dart';
 import 'package:movies_app/features/Home/presentation/cubit/movies_state.dart';
 import 'package:movies_app/features/Home/presentation/widgets/action_see_more.dart';
@@ -17,14 +17,6 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  late List<Movies> allMovies;
-
-  @override
-  void initState() {
-    super.initState();
-    allMovies = BlocProvider.of<MoviesCubit>(context).getMovies();
-  }
-
   Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,
@@ -60,7 +52,9 @@ class _HomeViewState extends State<HomeView> {
             child: BlocBuilder<MoviesCubit, MoviesState>(
               builder: (context, state) {
                 if (state is moviesLoaded) {
-                  allMovies = (state).allMovies;
+                  final category = (state).category;
+                  final allMovies = state.allMovies;
+                  final categoryMovies = state.categoryMovies;
                   return Column(
                     children: [
                       Padding(
@@ -95,28 +89,34 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10.w),
-                        child: ActionSeeMore(),
+                        child: ActionSeeMore(category: category),
                       ),
+
                       SizedBox(
                         height: 220.h,
                         child: ListView.separated(
                           padding: EdgeInsets.only(left: 10.w),
                           scrollDirection: Axis.horizontal,
-                          itemCount: allMovies.length,
+                          itemCount: categoryMovies.length,
                           separatorBuilder: (context, index) =>
                               SizedBox(width: 10.w),
                           itemBuilder: (context, index) {
                             return SizedBox(
                               width: 146.w,
-                              child: MovieGridItem(movies: allMovies[index]),
+                              child: MovieGridItem(
+                                movies: categoryMovies[index],
+                              ),
                             );
                           },
                         ),
                       ),
+                      SizedBox(height: 24),
                     ],
                   );
                 } else {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(
+                    child: CircularProgressIndicator(color: AppColors.white),
+                  );
                 }
               },
             ),
