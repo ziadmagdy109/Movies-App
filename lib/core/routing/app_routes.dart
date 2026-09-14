@@ -21,6 +21,9 @@ import '../../features/Auth/presentation/cubit/forget_password_cubit.dart';
 import '../../features/Auth/presentation/cubit/google_signin_cubit.dart';
 import '../../features/Auth/presentation/cubit/signin_cubit.dart';
 import '../../features/Auth/presentation/cubit/signup_cubit.dart';
+import '../../features/MovieDetails/presentation/cubit/movies_details_cubit.dart';
+import '../../features/MovieDetails/repo/movie_details_repo.dart';
+import '../../features/MovieDetails/service/movie_details_web_service.dart';
 import '../../features/Splash/splash_screen.dart';
 import 'app_route_name.dart';
 
@@ -86,6 +89,7 @@ abstract class AppRoutes {
         return MaterialPageRoute(builder: (context) => const ProfileView());
       case AppRouteName.movieDetails:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const MovieDetailsView(),
         );
       case AppRouteName.updateProfile:

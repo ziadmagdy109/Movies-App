@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 4), () {
-      navigatorKey.currentState!.pushReplacementNamed(AppRouteName.explore);
+      navigatorKey.currentState!.pushReplacementNamed(AppRouteName.layout);
     });
   }
 

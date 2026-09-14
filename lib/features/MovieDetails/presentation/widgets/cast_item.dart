@@ -4,7 +4,11 @@ import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
 
 class CastItem extends StatelessWidget {
-  const CastItem({super.key});
+
+final String actorName;
+final String actorImage;
+final String characterName;
+  const CastItem({super.key,required this.actorImage,required this.actorName,required this.characterName});
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +25,7 @@ class CastItem extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
-            child: Assets.images.actor.image(
-              width: 48.w,
-              height: 48.h,
-              fit: BoxFit.cover,
-            ),
+            child: Image.network(actorImage)
           ),
 
           SizedBox(width: 10.w),
@@ -36,7 +36,7 @@ class CastItem extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  "Name : Hayley Atwell",
+                  "Name : $actorName",
                   style: theme.textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight(400),
                     color: AppColors.mainText,
@@ -49,7 +49,7 @@ class CastItem extends StatelessWidget {
 
               Expanded(
                 child: Text(
-                  "Character : Captain Carter",
+                  "Character : $characterName",
                   style: theme.textTheme.bodySmall?.copyWith(
                     fontWeight: FontWeight(400),
                     color: AppColors.mainText,

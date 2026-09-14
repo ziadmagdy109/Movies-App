@@ -14,7 +14,7 @@ class MovieGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigatorKey.currentState?.pushNamed(AppRouteName.movieDetails);
+        navigatorKey.currentState?.pushNamed(AppRouteName.movieDetails,arguments: movies?.id);
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14.r),

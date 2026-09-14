@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:movies_app/core/utils/api_list.dart';
 
+import '../../../MovieDetails/model/movies_details.dart';
+
 class MoviesWebService {
   late Dio dio;
   MoviesWebService() {
@@ -38,4 +40,5 @@ class MoviesWebService {
       return [];
     }
   }
+
 }
