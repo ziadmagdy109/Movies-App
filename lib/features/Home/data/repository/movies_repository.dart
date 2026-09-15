@@ -1,4 +1,5 @@
 import 'package:movies_app/features/Home/data/models/movies.dart';
+import 'package:movies_app/features/MovieDetails/model/movies_details.dart';
 import 'package:movies_app/features/Home/data/service/movies_web_service.dart';
 
 class MoviesRepository {
@@ -14,4 +15,5 @@ class MoviesRepository {
     final movies = await moviesWebService.getMoviesByGenre(genre);
     return movies.map((movie) => Movies.fromJson(movie)).toList();
   }
+
 }

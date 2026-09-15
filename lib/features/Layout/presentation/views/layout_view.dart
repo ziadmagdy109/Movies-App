@@ -22,53 +22,52 @@ class LayoutView extends StatelessWidget {
     Assets.icons.profileIcon.svg(),
   ];
 
-  MoviesRepository moviesRepository = MoviesRepository(
+  final MoviesRepository moviesRepository = MoviesRepository(
     moviesWebService: MoviesWebService(),
   );
+
+  LayoutView({super.key});
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<LayoutCubit, int>(
       builder: (context, currentIndex) {
-        return SafeArea(
-          bottom: false,
-          child: Scaffold(
-            body: IndexedStack(
-              index: currentIndex,
-              children: [
-                HomeView(),
-                SearchView(),
-                BlocProvider(
-                  create: (context) => BrowseCubit(),
-                  child: BrowseView(),
-                ),
-                ProfileView(),
-              ],
-            ),
-            bottomNavigationBar: Padding(
-              padding: EdgeInsets.only(right: 10.w, left: 10.w, bottom: 20.h),
-              child: Container(
-                height: 44.h,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: AppColors.navbarColor,
-                  borderRadius: BorderRadius.circular(16.r),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: List.generate(tabs.length, (index) {
-                    return NavigatorTapWidget(
-                      onTap: () {
-                        if (index == 0 && currentIndex != 0) {
-                          context.read<MoviesCubit>().getNextCategoryMovies();
-                        }
+        return Scaffold(
+          body: IndexedStack(
+            index: currentIndex,
+            children: [
+              HomeView(),
+              SearchView(),
+              BlocProvider(
+                create: (context) => BrowseCubit(),
+                child: BrowseView(),
+              ),
+              ProfileView(),
+            ],
+          ),
+          bottomNavigationBar: Padding(
+            padding: EdgeInsets.only(right: 10.w, left: 10.w, bottom: 20.h),
+            child: Container(
+              height: 44.h,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.navbarColor,
+                borderRadius: BorderRadius.circular(16.r),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(tabs.length, (index) {
+                  return NavigatorTapWidget(
+                    onTap: () {
+                      if (index == 0 && currentIndex != 0) {
+                        context.read<MoviesCubit>().getNextCategoryMovies();
+                      }
 
-                        context.read<LayoutCubit>().changeIndex(index);
-                      },
-                      isSelected: currentIndex == index,
-                      widget: tabs[index],
-                    );
-                  }),
-                ),
+                      context.read<LayoutCubit>().changeIndex(index);
+                    },
+                    isSelected: currentIndex == index,
+                    widget: tabs[index],
+                  );
+                }),
               ),
             ),
           ),

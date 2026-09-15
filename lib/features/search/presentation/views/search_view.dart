@@ -11,6 +11,7 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         leading: SizedBox(),
         leadingWidth: 0,
         title: CustomTextFormField(

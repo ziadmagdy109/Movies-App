@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
-import 'package:movies_app/features/Home/data/models/movies.dart';
 import 'package:movies_app/main.dart';
 
-import '../gen/assets.gen.dart';
-
-class MovieGridItem extends StatelessWidget {
-  final Movies? movies;
-  const MovieGridItem({super.key, this.movies});
+import '../../../../core/gen/assets.gen.dart';
+import '../../model/suggestions_model.dart';
+class SuggestionMovie extends StatelessWidget {
+  final SuggestedMovieModel? movie;
+  const SuggestionMovie({super.key, this.movie});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigatorKey.currentState?.pushNamed(AppRouteName.movieDetails,arguments: movies?.id);
+        navigatorKey.currentState?.pushNamed(AppRouteName.movieDetails,arguments: movie?.id);
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14.r),
         child: Stack(
           fit: StackFit.expand,
           children: [
-            movies?.largeCoverImage.isNotEmpty == true
-                ? Image.network(movies!.largeCoverImage, fit: BoxFit.cover)
-                : Assets.images.marvelgridimg.image(),
+            movie?.image.isNotEmpty == true
+                ? Image.network(movie!.image, fit: BoxFit.cover)
+                : Icon(Icons.error),
             Positioned(
               top: 8.h,
               left: 8.w,
@@ -37,7 +36,7 @@ class MovieGridItem extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      movies?.rating.toString() ?? '',
+                      movie?.rating.toString() ?? '',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

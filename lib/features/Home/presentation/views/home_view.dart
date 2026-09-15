@@ -63,8 +63,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       CarouselSlider(
                         items: allMovies
-                            .map((movie) => MovieGridItem(movies: movie))
-                            .toList(),
+                            .map((movie) => MovieGridItem(movies: movie)).toList(),
                         options: CarouselOptions(
                           height: MediaQuery.of(context).size.height * 0.34,
                           aspectRatio: 2 / 3,
