@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
 
 class CastItem extends StatelessWidget {
+  final String actorName;
+  final String actorImage;
+  final String characterName;
 
-final String actorName;
-final String actorImage;
-final String characterName;
-  const CastItem({super.key,required this.actorImage,required this.actorName,required this.characterName});
+  const CastItem({
+    super.key,
+    required this.actorImage,
+    required this.actorName,
+    required this.characterName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,39 +29,51 @@ final String characterName;
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(8.r),
-            child: Image.network(actorImage)
+            child: SizedBox(
+              width: 48.w,
+              height: 48.h,
+              child: actorImage.isNotEmpty
+                  ? Image.network(
+                actorImage,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) =>
+                const Icon(Icons.person),
+              )
+                  : const Icon(Icons.person),
+            ),
           ),
 
           SizedBox(width: 10.w),
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Text(
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
                   "Name : $actorName",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight(400),
+                    fontWeight: FontWeight.w400,
                     color: AppColors.mainText,
                     fontSize: 20.sp,
                   ),
                 ),
-              ),
-
-              SizedBox(height: 6.h),
-
-              Expanded(
-                child: Text(
+                SizedBox(height: 2.h),
+                Text(
                   "Character : $characterName",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: theme.textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight(400),
+                    fontWeight: FontWeight.w400,
                     color: AppColors.mainText,
                     fontSize: 20.sp,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

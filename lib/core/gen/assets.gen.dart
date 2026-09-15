@@ -32,6 +32,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/book-mark.svg
   SvgGenImage get bookMark => const SvgGenImage('assets/icons/book-mark.svg');
 
+  /// File path: assets/icons/bookmarkempty.png
+  AssetGenImage get bookmarkempty =>
+      const AssetGenImage('assets/icons/bookmarkempty.png');
+
   /// File path: assets/icons/browse-icon.svg
   SvgGenImage get browseIcon =>
       const SvgGenImage('assets/icons/browse-icon.svg');
@@ -115,6 +119,7 @@ class $AssetsIconsGen {
     user,
     arrowBack,
     bookMark,
+    bookmarkempty,
     browseIcon,
     clock,
     closeeye,

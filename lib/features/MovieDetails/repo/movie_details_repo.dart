@@ -1,7 +1,7 @@
 import 'package:movies_app/features/MovieDetails/service/movie_details_web_service.dart';
 
 import '../model/movies_details.dart';
-
+import '../model/suggestions_model.dart';
 class MovieDetailsRepo {
   late final MovieDetailsWebService moviesWebService;
 
@@ -9,5 +9,8 @@ class MovieDetailsRepo {
 
   Future<MoviesDetails> getMovieDetails(int movieId) async {
     return await moviesWebService.getMovieDetails(movieId);
+  }
+  Future<List<SuggestedMovieModel>> getMovieSuggestions(int movieId) async {
+    return await moviesWebService.getMovieSuggestions(movieId);
   }
 }

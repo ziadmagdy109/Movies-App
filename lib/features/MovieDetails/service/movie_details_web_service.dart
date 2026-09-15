@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import '../../../core/utils/api_list.dart';
 import '../model/movies_details.dart';
+import '../model/suggestions_model.dart';
 
 class MovieDetailsWebService {
 
@@ -14,5 +15,19 @@ class MovieDetailsWebService {
     } catch (e) {
       rethrow;
     }
+  }
+  Future<List<SuggestedMovieModel>> getMovieSuggestions(int movieId) async {
+    final response = await dio.get(
+      ApiList.movieSuggestions,
+      queryParameters: {
+        'movie_id': movieId,
+      },
+    );
+
+    final movies = response.data['data']['movies'] as List;
+
+    return movies
+        .map((movie) => SuggestedMovieModel.fromJson(movie))
+        .toList();
   }
 }

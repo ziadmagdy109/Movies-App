@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class GenresItem extends StatelessWidget {
-  const GenresItem({super.key});
+final String genres;
+  const GenresItem({super.key, required this.genres});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class GenresItem extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: Text(
-        'Action',
+       genres,
         style: TextStyle(color: Colors.white, fontSize: 14.sp),
       ),
     );
