@@ -88,8 +88,7 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                               ),
                         onTap: () {
                           setState(() {
-                          isWatchList = !isWatchList;
-
+                            isWatchList = !isWatchList;
                           });
                         },
                       ),
@@ -280,33 +279,34 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                                 return Center(
                                   child: CircularProgressIndicator(),
                                 );
-                              }
-                              else if(state is SuggestionsFailure)
-                                {
-                                  Fluttertoast.showToast(
-                                    msg: 'Failed To Load Data',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                  );
-                                }
-                             else  if (state is SuggestionsLoaded) {
-                               final suggestions = state.suggestionMovies;
+                              } else if (state is SuggestionsFailure) {
+                                Fluttertoast.showToast(
+                                  msg: 'Failed To Load Data',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                );
+                              } else if (state is SuggestionsLoaded) {
+                                final suggestions = state.suggestionMovies;
                                 return GridView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   padding: EdgeInsets.zero,
                                   shrinkWrap: true,
                                   gridDelegate:
-                                  SliverGridDelegateWithMaxCrossAxisExtent(
-                                    maxCrossAxisExtent: 200,
-                                    mainAxisSpacing: 8,
-                                    crossAxisSpacing: 20,
-                                    childAspectRatio: 0.62,
-                                  ),
-                              itemCount: suggestions.length,
-                              itemBuilder: (context, index) => SuggestionMovie(movie: suggestions[index]),
-                            );
+                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                        maxCrossAxisExtent: 200,
+                                        mainAxisSpacing: 8,
+                                        crossAxisSpacing: 20,
+                                        childAspectRatio: 0.62,
+                                      ),
+                                  itemCount: suggestions.length,
+                                  itemBuilder: (context, index) =>
+                                      SuggestionMovie(
+                                        movie: suggestions[index],
+                                      ),
+                                );
                               }
-                          return SizedBox();}
+                              return SizedBox();
+                            },
                           ),
                           SizedBox(height: 16.h),
                           Text(
