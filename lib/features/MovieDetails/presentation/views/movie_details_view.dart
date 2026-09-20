@@ -52,13 +52,26 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
           ),
         ],
         child: BlocConsumer<MoviesDetailsCubit, MoviesDetailsState>(
-          listener: (context, state) {},
-          builder: (context, state) {
+          listener: (context, state) {
             if (state is MoviesDetailsLoading) {
               EasyLoading.show(status: 'loading...');
-            }
-            if (state is MoviesDetailsLoaded) {
+            } else if (state is MoviesDetailsLoaded) {
               EasyLoading.dismiss();
+            } else if (state is MoviesDetailsFailure) {
+              EasyLoading.dismiss();
+              Fluttertoast.showToast(
+                msg: state.msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is MoviesDetailsLoaded) {
               final movieDetails = state.moviesDetails;
               List<String> screenShots = [
                 movieDetails.large_screenshot_image1,
@@ -274,39 +287,41 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                               color: AppColors.mainText,
                             ),
                           ),
-                          BlocBuilder<SuggestionsCubit, SuggestionsState>(
+                          BlocConsumer<SuggestionsCubit, SuggestionsState>(
+                            listener: (context, state) {
+                              if (state is SuggestionsFailure) {
+                                Fluttertoast.showToast(
+                                  msg: 'Failed To Load Data',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                );
+                              }
+                            },
                             builder: (context, state) {
                               if (state is SuggestionsLoading) {
                                 return Center(
                                   child: CircularProgressIndicator(),
                                 );
-                              }
-                              else if(state is SuggestionsFailure)
-                                {
-                                  Fluttertoast.showToast(
-                                    msg: 'Failed To Load Data',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                  );
-                                }
-                             else  if (state is SuggestionsLoaded) {
-                               final suggestions = state.suggestionMovies;
+                              } else if (state is SuggestionsLoaded) {
+                                final suggestions = state.suggestionMovies;
                                 return GridView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   padding: EdgeInsets.zero,
                                   shrinkWrap: true,
                                   gridDelegate:
-                                  SliverGridDelegateWithMaxCrossAxisExtent(
+                                      SliverGridDelegateWithMaxCrossAxisExtent(
                                     maxCrossAxisExtent: 200,
                                     mainAxisSpacing: 8,
                                     crossAxisSpacing: 20,
                                     childAspectRatio: 0.62,
                                   ),
-                              itemCount: suggestions.length,
-                              itemBuilder: (context, index) => SuggestionMovie(movie: suggestions[index]),
-                            );
+                                  itemCount: suggestions.length,
+                                  itemBuilder: (context, index) =>
+                                      SuggestionMovie(movie: suggestions[index]),
+                                );
                               }
-                          return SizedBox();}
+                              return SizedBox();
+                            },
                           ),
                           SizedBox(height: 16.h),
                           Text(
@@ -385,19 +400,6 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                     ),
                   ),
                 ],
-              );
-            } else if (state is MoviesDetailsFailure) {
-              print(movieId);
-              print(movieId.runtimeType);
-              EasyLoading.dismiss();
-              Fluttertoast.showToast(
-                msg: state.msg,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0,
               );
             }
             return SizedBox();
