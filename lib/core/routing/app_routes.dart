@@ -9,6 +9,9 @@ import 'package:movies_app/features/Home/presentation/cubit/movies_cubit.dart';
 import 'package:movies_app/features/Home/presentation/views/home_view.dart';
 import 'package:movies_app/features/Layout/presentation/cubit/layout_cubit.dart';
 import 'package:movies_app/features/Layout/presentation/views/layout_view.dart';
+import 'package:movies_app/features/Browse/data/repository/browse_repository.dart';
+import 'package:movies_app/features/Browse/data/service/browse_web_service.dart';
+import 'package:movies_app/features/Browse/presentation/cubit/browse_cubit.dart';
 import 'package:movies_app/features/Browse/presentation/views/browse_view.dart';
 import 'package:movies_app/features/MovieDetails/presentation/views/movie_details_view.dart';
 import 'package:movies_app/features/OnBoarding/explore_page.dart';
@@ -84,7 +87,16 @@ abstract class AppRoutes {
       case AppRouteName.search:
         return MaterialPageRoute(builder: (context) => const SearchView());
       case AppRouteName.browse:
-        return MaterialPageRoute(builder: (context) => BrowseView());
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => BrowseCubit(
+              browseRepository: BrowseRepository(
+                browseWebService: BrowseWebService(),
+              ),
+            ),
+            child: const BrowseView(),
+          ),
+        );
       case AppRouteName.profile:
         return MaterialPageRoute(builder: (context) => const ProfileView());
       case AppRouteName.movieDetails:
