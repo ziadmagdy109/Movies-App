@@ -52,13 +52,26 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
           ),
         ],
         child: BlocConsumer<MoviesDetailsCubit, MoviesDetailsState>(
-          listener: (context, state) {},
-          builder: (context, state) {
+          listener: (context, state) {
             if (state is MoviesDetailsLoading) {
               EasyLoading.show(status: 'loading...');
-            }
-            if (state is MoviesDetailsLoaded) {
+            } else if (state is MoviesDetailsLoaded) {
               EasyLoading.dismiss();
+            } else if (state is MoviesDetailsFailure) {
+              EasyLoading.dismiss();
+              Fluttertoast.showToast(
+                msg: state.msg,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is MoviesDetailsLoaded) {
               final movieDetails = state.moviesDetails;
               List<String> screenShots = [
                 movieDetails.large_screenshot_image1,
@@ -273,7 +286,16 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                               color: AppColors.mainText,
                             ),
                           ),
-                          BlocBuilder<SuggestionsCubit, SuggestionsState>(
+                          BlocConsumer<SuggestionsCubit, SuggestionsState>(
+                            listener: (context, state) {
+                              if (state is SuggestionsFailure) {
+                                Fluttertoast.showToast(
+                                  msg: 'Failed To Load Data',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                );
+                              }
+                            },
                             builder: (context, state) {
                               if (state is SuggestionsLoading) {
                                 return Center(
@@ -293,16 +315,14 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                                   shrinkWrap: true,
                                   gridDelegate:
                                       SliverGridDelegateWithMaxCrossAxisExtent(
-                                        maxCrossAxisExtent: 200,
-                                        mainAxisSpacing: 8,
-                                        crossAxisSpacing: 20,
-                                        childAspectRatio: 0.62,
-                                      ),
+                                    maxCrossAxisExtent: 200,
+                                    mainAxisSpacing: 8,
+                                    crossAxisSpacing: 20,
+                                    childAspectRatio: 0.62,
+                                  ),
                                   itemCount: suggestions.length,
                                   itemBuilder: (context, index) =>
-                                      SuggestionMovie(
-                                        movie: suggestions[index],
-                                      ),
+                                      SuggestionMovie(movie: suggestions[index]),
                                 );
                               }
                               return SizedBox();
@@ -385,19 +405,6 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                     ),
                   ),
                 ],
-              );
-            } else if (state is MoviesDetailsFailure) {
-              print(movieId);
-              print(movieId.runtimeType);
-              EasyLoading.dismiss();
-              Fluttertoast.showToast(
-                msg: state.msg,
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.red,
-                textColor: Colors.white,
-                fontSize: 16.0,
               );
             }
             return SizedBox();
