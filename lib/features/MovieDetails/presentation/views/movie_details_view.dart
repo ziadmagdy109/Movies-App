@@ -101,8 +101,7 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                               ),
                         onTap: () {
                           setState(() {
-                          isWatchList = !isWatchList;
-
+                            isWatchList = !isWatchList;
                           });
                         },
                       ),
@@ -301,6 +300,12 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                               if (state is SuggestionsLoading) {
                                 return Center(
                                   child: CircularProgressIndicator(),
+                                );
+                              } else if (state is SuggestionsFailure) {
+                                Fluttertoast.showToast(
+                                  msg: 'Failed To Load Data',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
                                 );
                               } else if (state is SuggestionsLoaded) {
                                 final suggestions = state.suggestionMovies;
