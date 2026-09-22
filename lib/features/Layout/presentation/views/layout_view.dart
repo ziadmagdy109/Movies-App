@@ -9,6 +9,8 @@ import 'package:movies_app/features/Home/presentation/cubit/movies_cubit.dart';
 import 'package:movies_app/features/Home/presentation/views/home_view.dart';
 import 'package:movies_app/features/Layout/presentation/cubit/layout_cubit.dart';
 import 'package:movies_app/features/Layout/presentation/widgets/navigator_tap_widget.dart';
+import 'package:movies_app/features/Browse/data/repository/browse_repository.dart';
+import 'package:movies_app/features/Browse/data/service/browse_web_service.dart';
 import 'package:movies_app/features/Browse/presentation/cubit/browse_cubit.dart';
 import 'package:movies_app/features/Browse/presentation/views/browse_view.dart';
 import 'package:movies_app/features/Profile/presentation/views/profile_view.dart';
@@ -48,8 +50,12 @@ class LayoutView extends StatelessWidget {
                 child: SearchView(),
               ),
               BlocProvider(
-                create: (context) => BrowseCubit(),
-                child: BrowseView(),
+                create: (context) => BrowseCubit(
+                  browseRepository: BrowseRepository(
+                    browseWebService: BrowseWebService(),
+                  ),
+                ),
+                child: const BrowseView(),
               ),
               ProfileView(),
             ],
