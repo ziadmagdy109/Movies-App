@@ -9,9 +9,14 @@ import 'package:movies_app/features/Home/presentation/cubit/movies_cubit.dart';
 import 'package:movies_app/features/Home/presentation/views/home_view.dart';
 import 'package:movies_app/features/Layout/presentation/cubit/layout_cubit.dart';
 import 'package:movies_app/features/Layout/presentation/widgets/navigator_tap_widget.dart';
+import 'package:movies_app/features/Browse/data/repository/browse_repository.dart';
+import 'package:movies_app/features/Browse/data/service/browse_web_service.dart';
 import 'package:movies_app/features/Browse/presentation/cubit/browse_cubit.dart';
 import 'package:movies_app/features/Browse/presentation/views/browse_view.dart';
 import 'package:movies_app/features/Profile/presentation/views/profile_view.dart';
+import 'package:movies_app/features/Search/data/repository/search_repository.dart';
+import 'package:movies_app/features/Search/data/service/search_web_service.dart';
+import 'package:movies_app/features/Search/presentation/cubit/search_cubit.dart';
 import 'package:movies_app/features/Search/presentation/views/search_view.dart';
 
 class LayoutView extends StatelessWidget {
@@ -36,10 +41,21 @@ class LayoutView extends StatelessWidget {
             index: currentIndex,
             children: [
               HomeView(),
-              SearchView(),
               BlocProvider(
-                create: (context) => BrowseCubit(),
-                child: BrowseView(),
+                create: (context) => SearchCubit(
+                  searchRepository: SearchRepository(
+                    searchWebService: SearchWebService(),
+                  ),
+                ),
+                child: SearchView(),
+              ),
+              BlocProvider(
+                create: (context) => BrowseCubit(
+                  browseRepository: BrowseRepository(
+                    browseWebService: BrowseWebService(),
+                  ),
+                ),
+                child: const BrowseView(),
               ),
               ProfileView(),
             ],

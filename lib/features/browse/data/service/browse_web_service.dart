@@ -1,28 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:movies_app/core/utils/api_list.dart';
 
-class MoviesWebService {
+class BrowseWebService {
   late Dio dio;
-  MoviesWebService() {
+
+  BrowseWebService() {
     BaseOptions options = BaseOptions(
       baseUrl: ApiList.baseUrl,
       receiveDataWhenStatusError: true,
-      connectTimeout: Duration(seconds: 60),
-      receiveTimeout: Duration(seconds: 60),
+      connectTimeout: const Duration(seconds: 60),
+      receiveTimeout: const Duration(seconds: 60),
     );
 
     dio = Dio(options);
-  }
-
-  Future<List<dynamic>> getAllMovies() async {
-    try {
-      Response response = await dio.get(ApiList.listMovies);
-      print(response.data.toString());
-      return response.data["data"]["movies"];
-    } catch (e) {
-      print(e.toString());
-      return [];
-    }
   }
 
   Future<List<dynamic>> getMoviesByGenre(String genre) async {
@@ -31,8 +21,7 @@ class MoviesWebService {
         ApiList.listMovies,
         queryParameters: {'genre': genre},
       );
-      print(response.data.toString());
-      return response.data["data"]["movies"];
+      return response.data["data"]["movies"] ?? [];
     } catch (e) {
       print(e.toString());
       return [];

@@ -324,6 +324,12 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                                 return Center(
                                   child: CircularProgressIndicator(),
                                 );
+                              } else if (state is SuggestionsFailure) {
+                                Fluttertoast.showToast(
+                                  msg: 'Failed To Load Data',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.CENTER,
+                                );
                               } else if (state is SuggestionsLoaded) {
                                 final suggestions = state.suggestionMovies;
                                 return GridView.builder(

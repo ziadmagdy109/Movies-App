@@ -20,7 +20,7 @@ void main() async {
   await GoogleSignIn.instance.initialize(
     serverClientId:
         "85025048975-bmhhjqi9d64752kbtitpbjqlb9dev0ge.apps.googleusercontent.com",
-  );//Aud
+  ); //Aud
   runApp(const MyApp());
 }
 
