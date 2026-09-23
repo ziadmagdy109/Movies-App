@@ -18,9 +18,19 @@ class SignUpCubit extends Cubit<SignUpState> {
 
   SignUpCubit() : super(SignUpInitial());
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+  }) async {
     emit(SignUpLoading());
-    final bool success = await _services.signUpWithEmailAndPassword(email, password);
+    final bool success = await _services.signUpWithEmailAndPassword(
+      email,
+      password,
+      name,
+      phone,
+    );
     if (success) {
       emit(SignUpSuccess());
     } else {

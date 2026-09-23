@@ -51,9 +51,11 @@ class _RegisterViewState extends State<RegisterView> {
     if (_formKey.currentState!.validate()) {
       //Call cubit here
       context.read<SignUpCubit>().signUp(
-        _emailController.text,
-        _passwordController.text,
-      );
+            name: _nameController.text,
+            email: _emailController.text,
+            password: _passwordController.text,
+            phone: _phoneController.text,
+          );
     }
   }
 

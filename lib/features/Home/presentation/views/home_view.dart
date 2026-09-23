@@ -8,6 +8,7 @@ import 'package:movies_app/core/widgets/movie_grid_item.dart';
 import 'package:movies_app/features/Home/presentation/cubit/movies_cubit.dart';
 import 'package:movies_app/features/Home/presentation/cubit/movies_state.dart';
 import 'package:movies_app/features/Home/presentation/widgets/action_see_more.dart';
+import 'package:movies_app/features/library/presentation/cubit/user_library_cubit.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -17,6 +18,13 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<UserLibraryCubit>().load();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Stack(
       fit: StackFit.expand,

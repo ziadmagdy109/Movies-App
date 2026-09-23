@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,6 +12,10 @@ import 'package:movies_app/main.dart';
 
 import '../../../../core/widgets/movie_grid_item.dart';
 import '../../../Auth/presentation/cubit/signout_cubit.dart';
+import '../../../library/presentation/cubit/user_library_cubit.dart';
+import '../../../library/presentation/cubit/user_library_state.dart';
+import '../cubit/update_profile_cubit.dart';
+import '../cubit/update_profile_states.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -47,18 +53,58 @@ class TabBarDelegate extends SliverPersistentHeaderDelegate {
 class _ProfileViewState extends State<ProfileView>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
+  final UpdateProfileCubit _profileCubit = UpdateProfileCubit();
+  late final StreamSubscription<UpdateProfileState> _profileSubscription;
+
+  // Profile data now lives in state so it can be refreshed after editing.
+  AssetGenImage _avatar = Assets.images.gamer1;
+  String _name = '';
 
   @override
   void initState() {
     super.initState();
 
     tabController = TabController(length: 2, vsync: this);
+
+    _profileSubscription = _profileCubit.stream.listen((state) {
+      if (!mounted) return;
+      if (state is UpdateProfileLoaded) {
+        setState(() {
+          _name = state.name;
+          _avatar = state.avatar;
+        });
+      } else if (state is UpdateProfileSuccess) {
+        setState(() {
+          _name = state.name;
+          _avatar = state.avatar;
+        });
+      }
+    });
+    _profileCubit.loadProfile();
   }
 
   @override
   void dispose() {
+    _profileSubscription.cancel();
+    _profileCubit.close();
     tabController.dispose();
     super.dispose();
+  }
+
+  Future<void> _goToEditProfile() async {
+    final result = await navigatorKey.currentState!
+        .pushNamed(AppRouteName.updateProfile);
+
+    if (result is UpdateProfileSuccess) {
+      if (mounted) {
+        setState(() {
+          _name = result.name;
+          _avatar = result.avatar;
+        });
+      }
+    } else {
+      await _profileCubit.loadProfile();
+    }
   }
 
   @override
@@ -69,36 +115,41 @@ class _ProfileViewState extends State<ProfileView>
       create: (context) => SignOutCubit(),
       child: Scaffold(
         backgroundColor: AppColors.mainColor,
-      
+
         body: NestedScrollView(
           headerSliverBuilder: (context, constraints) => [
-      
+
             // ================= PROFILE =================
             SliverToBoxAdapter(
               child: Column(
                 children: [
                   SizedBox(height: 52.h),
-      
+
                   Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 24.w),
-                        child: Assets.images.gamer1.image(
+                        child: _avatar.image(
                           width: 118.w,
                           height: 118.h,
                         ),
                       ),
-      
+
                       Expanded(
                         child: Column(
                           children: [
-                            Text(
-                              "12",
-                              style: theme.textTheme.headlineMedium?.copyWith(
-                                color: AppColors.mainText,
-                              ),
+                            BlocBuilder<UserLibraryCubit, UserLibraryState>(
+                              builder: (context, state) {
+                                return Text(
+                                  '${context.read<UserLibraryCubit>().favorites.length}',
+                                  style: theme.textTheme.headlineMedium
+                                      ?.copyWith(
+                                    color: AppColors.mainText,
+                                  ),
+                                );
+                              },
                             ),
-      
+
                             Text(
                               "Wish List",
                               style: theme.textTheme.titleMedium?.copyWith(
@@ -108,17 +159,22 @@ class _ProfileViewState extends State<ProfileView>
                           ],
                         ),
                       ),
-      
+
                       Expanded(
                         child: Column(
                           children: [
-                            Text(
-                              "10",
-                              style: theme.textTheme.headlineMedium?.copyWith(
-                                color: AppColors.mainText,
-                              ),
+                            BlocBuilder<UserLibraryCubit, UserLibraryState>(
+                              builder: (context, state) {
+                                return Text(
+                                  '${context.read<UserLibraryCubit>().history.length}',
+                                  style: theme.textTheme.headlineMedium
+                                      ?.copyWith(
+                                    color: AppColors.mainText,
+                                  ),
+                                );
+                              },
                             ),
-      
+
                             Text(
                               "History",
                               style: theme.textTheme.titleMedium?.copyWith(
@@ -130,16 +186,16 @@ class _ProfileViewState extends State<ProfileView>
                       ),
                     ],
                   ),
-      
+
                   SizedBox(height: 10.h),
-      
+
                   // ================= USERNAME =================
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 27.w),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
-                        "John Safwat",
+                        _name,
                         style: theme.textTheme.titleLarge?.copyWith(
                           color: AppColors.mainText,
                           fontWeight: FontWeight.w700,
@@ -147,9 +203,9 @@ class _ProfileViewState extends State<ProfileView>
                       ),
                     ),
                   ),
-      
+
                   SizedBox(height: 10.h),
-      
+
                   // ================= BUTTONS =================
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -159,14 +215,12 @@ class _ProfileViewState extends State<ProfileView>
                           flex: 3,
                           child: CustomButton(
                             text: "Edit Profile",
-                            onPressed: () {
-                              navigatorKey.currentState!.pushNamed(AppRouteName.updateProfile);
-                            },
+                            onPressed: _goToEditProfile,
                           ),
                         ),
-      
+
                         SizedBox(width: 10.w),
-      
+
                         Expanded(
                           flex: 2,
                           child: BlocConsumer<SignOutCubit, SignOutState>(
@@ -177,7 +231,7 @@ class _ProfileViewState extends State<ProfileView>
                                       (route) => false,
                                 );
                               }
-      
+
                               if (state is SignOutFailure) {
                                 Fluttertoast.showToast(
                                   msg: state.error,
@@ -204,12 +258,12 @@ class _ProfileViewState extends State<ProfileView>
                       ],
                     ),
                   ),
-      
+
                   SizedBox(height: 15.h),
                 ],
               ),
             ),
-      
+
             // ================= TAB BAR =================
             SliverPersistentHeader(
               pinned: true,
@@ -221,7 +275,7 @@ class _ProfileViewState extends State<ProfileView>
                   labelColor: AppColors.white,
                   unselectedLabelColor: AppColors.white,
                   dividerColor: Colors.transparent,
-      
+
                   tabs: [
                     Tab(
                       icon: Assets.icons.list.svg(
@@ -230,7 +284,7 @@ class _ProfileViewState extends State<ProfileView>
                       ),
                       text: "Watch List",
                     ),
-      
+
                     Tab(
                       icon: Assets.icons.folder.svg(
                         width: 20.w,
@@ -242,35 +296,70 @@ class _ProfileViewState extends State<ProfileView>
                 ),
               ),
             ),
-      
+
             // ================= TAB CONTENT =================
           ],
-          body: TabBarView(
-            controller: tabController,
-            children: [
-              // ================= WATCH LIST =================
-              Center(
-                child: Assets.images.empty.image(width: 120.w, height: 120.h),
-              ),
-      
-              // ================= HISTORY =================
-              GridView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-      
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 20,
-                  childAspectRatio: 0.62,
-                ),
-      
-                itemCount: 15,
-      
-                itemBuilder: (context, index) {
-                  return const MovieGridItem();
-                },
-              ),
-            ],
+          body: BlocBuilder<UserLibraryCubit, UserLibraryState>(
+            builder: (context, state) {
+              final userLibrary = context.read<UserLibraryCubit>();
+              final favorites = userLibrary.favorites;
+              final history = userLibrary.history;
+
+              return TabBarView(
+                controller: tabController,
+                children: [
+                  // ================= WATCH LIST =================
+                  favorites.isEmpty
+                      ? Center(
+                          child: Assets.images.empty.image(
+                            width: 120.w,
+                            height: 120.h,
+                          ),
+                        )
+                      : GridView.builder(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 10.h,
+                          ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 8,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: 0.62,
+                          ),
+                          itemCount: favorites.length,
+                          itemBuilder: (context, index) =>
+                              MovieGridItem(movies: favorites[index].toMovies()),
+                        ),
+
+                  // ================= HISTORY =================
+                  history.isEmpty
+                      ? Center(
+                          child: Assets.images.empty.image(
+                            width: 120.w,
+                            height: 120.h,
+                          ),
+                        )
+                      : GridView.builder(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 10.h,
+                          ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 8,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: 0.62,
+                          ),
+                          itemCount: history.length,
+                          itemBuilder: (context, index) =>
+                              MovieGridItem(movies: history[index].toMovies()),
+                        ),
+                ],
+              );
+            },
           ),
         ),
       ),

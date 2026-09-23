@@ -178,6 +178,30 @@ class $AssetsImagesGen {
   AssetGenImage get gamer12 =>
       const AssetGenImage('assets/images/gamer (1)-2.png');
 
+  /// File path: assets/images/gamer (1)-3.png
+  AssetGenImage get gamer13 =>
+      const AssetGenImage('assets/images/gamer (1)-3.png');
+
+  /// File path: assets/images/gamer (1)-4.png
+  AssetGenImage get gamer14 =>
+      const AssetGenImage('assets/images/gamer (1)-4.png');
+
+  /// File path: assets/images/gamer (1)-5.png
+  AssetGenImage get gamer15 =>
+      const AssetGenImage('assets/images/gamer (1)-5.png');
+
+  /// File path: assets/images/gamer (1)-6.png
+  AssetGenImage get gamer16 =>
+      const AssetGenImage('assets/images/gamer (1)-6.png');
+
+  /// File path: assets/images/gamer (1)-7.png
+  AssetGenImage get gamer17 =>
+      const AssetGenImage('assets/images/gamer (1)-7.png');
+
+  /// File path: assets/images/gamer (1)-8.png
+  AssetGenImage get gamer18 =>
+      const AssetGenImage('assets/images/gamer (1)-8.png');
+
   /// File path: assets/images/gamer (1).png
   AssetGenImage get gamer1 =>
       const AssetGenImage('assets/images/gamer (1).png');
@@ -220,6 +244,12 @@ class $AssetsImagesGen {
     empty,
     gamer11,
     gamer12,
+    gamer13,
+    gamer14,
+    gamer15,
+    gamer16,
+    gamer17,
+    gamer18,
     gamer1,
     groupmoviesposter,
     marvelgridimg,

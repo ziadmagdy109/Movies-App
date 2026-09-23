@@ -1,11 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
 import 'package:movies_app/core/routing/app_routes.dart';
 import 'package:movies_app/core/theme/app_theme.dart';
+import 'package:movies_app/features/library/data/repository/user_library_repository.dart';
+import 'package:movies_app/features/library/presentation/cubit/user_library_cubit.dart';
 
 import 'firebase_options.dart';
 
@@ -26,17 +29,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      splitScreenMode: true,
-      child: MaterialApp(
-        theme: AppTheme.themeData,
-        initialRoute: AppRouteName.initial,
-        onGenerateRoute: AppRoutes.onGenerateRoute,
-        navigatorKey: navigatorKey,
-        debugShowCheckedModeBanner: false,
-        builder: EasyLoading.init(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserLibraryCubit>(
+          create: (context) => UserLibraryCubit(
+            repository: UserLibraryRepository(),
+          ),
+        ),
+      ],
+      child: ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        child: MaterialApp(
+          theme: AppTheme.themeData,
+          initialRoute: AppRouteName.initial,
+          onGenerateRoute: AppRoutes.onGenerateRoute,
+          navigatorKey: navigatorKey,
+          debugShowCheckedModeBanner: false,
+          builder: EasyLoading.init(),
+        ),
       ),
     );
   }

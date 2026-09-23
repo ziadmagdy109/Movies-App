@@ -11,6 +11,9 @@ import 'package:movies_app/features/MovieDetails/presentation/widgets/cast_item.
 import 'package:movies_app/features/MovieDetails/presentation/widgets/genres_item.dart';
 import 'package:movies_app/features/MovieDetails/presentation/widgets/movie_info_row.dart';
 import 'package:movies_app/features/MovieDetails/repo/movie_details_repo.dart';
+import 'package:movies_app/features/library/data/models/saved_movie.dart';
+import 'package:movies_app/features/library/presentation/cubit/user_library_cubit.dart';
+import 'package:movies_app/features/library/presentation/cubit/user_library_state.dart';
 import 'package:movies_app/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -28,7 +31,6 @@ class MovieDetailsView extends StatefulWidget {
 }
 
 class _MovieDetailsViewState extends State<MovieDetailsView> {
-  bool isWatchList = false;
   @override
   Widget build(BuildContext context) {
     final movieId = ModalRoute.of(context)!.settings.arguments as int;
@@ -92,18 +94,28 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                     ),
                     actionsPadding: EdgeInsets.only(right: 16),
                     actions: [
-                      GestureDetector(
-                        child: isWatchList
-                            ? Assets.icons.bookMark.svg()
-                            : Assets.icons.bookmarkempty.image(
-                                width: 20.w,
-                                height: 29.h,
-                              ),
-                        onTap: () {
-                          setState(() {
-                          isWatchList = !isWatchList;
-
-                          });
+                      BlocBuilder<UserLibraryCubit, UserLibraryState>(
+                        builder: (context, state) {
+                          final bool isFavorite =
+                              context.read<UserLibraryCubit>().isFavorite(
+                                    movieId,
+                                  );
+                          return GestureDetector(
+                            child: isFavorite
+                                ? Assets.icons.bookMark.svg()
+                                : Assets.icons.bookmarkempty.image(
+                                    width: 20.w,
+                                    height: 29.h,
+                                  ),
+                            onTap: () {
+                              context.read<UserLibraryCubit>().toggleFavorite(
+                                    SavedMovie.fromDetails(
+                                      id: movieId,
+                                      details: movieDetails,
+                                    ),
+                                  );
+                            },
+                          );
                         },
                       ),
                     ],
@@ -180,6 +192,8 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                                     final url = Uri.parse(
                                       'https://www.imdb.com/title/${movieDetails.imdb_code}/',
                                     );
+                                    final userLibraryCubit =
+                                        context.read<UserLibraryCubit>();
                                     EasyLoading.show(
                                       status: 'Opening trailer...',
                                     );
@@ -189,7 +203,14 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                                         mode: LaunchMode.externalApplication,
                                       );
                                       EasyLoading.dismiss();
-                                      if (!launched) {
+                                      if (launched) {
+                                        userLibraryCubit.addToHistory(
+                                          SavedMovie.fromDetails(
+                                            id: movieId,
+                                            details: movieDetails,
+                                          ),
+                                        );
+                                      } else {
                                         Fluttertoast.showToast(
                                           msg: 'Could not open trailer',
                                           toastLength: Toast.LENGTH_SHORT,
@@ -197,6 +218,7 @@ class _MovieDetailsViewState extends State<MovieDetailsView> {
                                         );
                                       }
                                     } catch (e) {
+                                      EasyLoading.dismiss();
                                       Fluttertoast.showToast(
                                         msg: 'Could not open trailer',
                                         toastLength: Toast.LENGTH_SHORT,
