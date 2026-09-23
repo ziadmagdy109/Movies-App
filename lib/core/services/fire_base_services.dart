@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -7,12 +8,24 @@ class FireBaseServices {
   Future<bool> signUpWithEmailAndPassword(
     String emailAddress,
     String password,
+    String name,
+    String phone,
   ) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final UserCredential credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailAddress,
         password: password,
       );
+
+      final User? user = credential.user;
+      if (user != null) {
+        await user.updateDisplayName(name);
+        await FirebaseFirestore.instance
+            .collection('profiles')
+            .doc(user.uid)
+            .set({'name': name, 'phone': phone});
+      }
       return true;
     } on FirebaseAuthException catch (e) {
       Fluttertoast.showToast(
