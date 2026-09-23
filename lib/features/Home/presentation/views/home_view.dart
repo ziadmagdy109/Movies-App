@@ -63,7 +63,8 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       CarouselSlider(
                         items: allMovies
-                            .map((movie) => MovieGridItem(movies: movie)).toList(),
+                            .map((movie) => MovieGridItem(movies: movie))
+                            .toList(),
                         options: CarouselOptions(
                           height: MediaQuery.of(context).size.height * 0.34,
                           aspectRatio: 2 / 3,
@@ -113,9 +114,7 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   );
                 } else {
-                  return Center(
-                    child: CircularProgressIndicator(color: AppColors.white),
-                  );
+                  return Center(child: Assets.images.loading.image());
                 }
               },
             ),

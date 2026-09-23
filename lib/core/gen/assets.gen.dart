@@ -68,6 +68,10 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home-icon.svg
   SvgGenImage get homeIcon => const SvgGenImage('assets/icons/home-icon.svg');
 
+  /// File path: assets/icons/ic_launcher.png
+  AssetGenImage get icLauncher =>
+      const AssetGenImage('assets/icons/ic_launcher.png');
+
   /// File path: assets/icons/icon_google.svg
   SvgGenImage get iconGoogle =>
       const SvgGenImage('assets/icons/icon_google.svg');
@@ -130,6 +134,7 @@ class $AssetsIconsGen {
     folder,
     gredientDetailsView,
     homeIcon,
+    icLauncher,
     iconGoogle,
     list,
     name,
@@ -156,6 +161,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/Forgot password-bro 1.png
   AssetGenImage get forgotPasswordBro1 =>
       const AssetGenImage('assets/images/Forgot password-bro 1.png');
+
+  /// File path: assets/images/Loading.gif
+  AssetGenImage get loading => const AssetGenImage('assets/images/Loading.gif');
 
   /// File path: assets/images/Watch Now.png
   AssetGenImage get watchNow =>
@@ -214,6 +222,7 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [
     availableNow,
     forgotPasswordBro1,
+    loading,
     watchNow,
     actor,
     badboys,
