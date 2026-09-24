@@ -23,6 +23,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     required String email,
     required String password,
     required String phone,
+    required String avatarKey,
   }) async {
     emit(SignUpLoading());
     final bool success = await _services.signUpWithEmailAndPassword(
@@ -30,6 +31,7 @@ class SignUpCubit extends Cubit<SignUpState> {
       password,
       name,
       phone,
+      avatarKey,
     );
     if (success) {
       emit(SignUpSuccess());

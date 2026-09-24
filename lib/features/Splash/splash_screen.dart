@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
+import 'package:movies_app/core/services/auth_preferences.dart';
 import 'package:movies_app/main.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,8 +17,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 4), () {
-      navigatorKey.currentState!.pushReplacementNamed(AppRouteName.layout);
+    Future.delayed(const Duration(seconds: 4), () async {
+      final bool seenOnBoarding = await AuthPreferences.isOnBoardingSeen();
+      navigatorKey.currentState!.pushReplacementNamed(
+        seenOnBoarding ? AppRouteName.login : AppRouteName.onBoarding,
+      );
     });
   }
 

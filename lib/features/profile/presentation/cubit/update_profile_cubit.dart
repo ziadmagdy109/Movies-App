@@ -1,31 +1,20 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
 
+import '../../data/models/user_profile.dart';
+import '../../data/repository/profile_repository.dart';
 import 'update_profile_states.dart';
 
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   UpdateProfileCubit() : super(UpdateProfileInitial());
 
-  static final List<AssetGenImage> avatars = [
-    Assets.images.gamer1,
-    Assets.images.gamer11,
-    Assets.images.gamer12,
-    Assets.images.gamer13,
-    Assets.images.gamer14,
-    Assets.images.gamer15,
-    Assets.images.gamer16,
-    Assets.images.gamer17,
-    Assets.images.gamer18,
-  ];
+  final ProfileRepository _repository = ProfileRepository();
 
-  static AssetGenImage avatarFromPath(String? path) {
-    for (final AssetGenImage avatar in avatars) {
-      if (avatar.path == path) return avatar;
-    }
-    return avatars.first;
-  }
+  static List<AssetGenImage> get avatars => UserAvatars.avatars;
+
+  static AssetGenImage avatarFromPath(String? path) =>
+      UserAvatars.imageFromKeyOrPath(path);
 
   Future<void> loadProfile() async {
     emit(UpdateProfileLoading());
@@ -35,24 +24,18 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         throw Exception('No signed-in user');
       }
 
-      final DocumentSnapshot document = await FirebaseFirestore.instance
-          .collection('profiles')
-          .doc(user.uid)
-          .get()
-          .timeout(const Duration(seconds: 10));
-
-      if (document.exists) {
-        final data = document.data() as Map<String, dynamic>? ?? const {};
+      final UserProfile? profile = await _repository.getProfile();
+      if (profile != null) {
         emit(UpdateProfileLoaded(
-          name: data['name'] as String? ?? user.displayName ?? '',
-          phone: data['phone'] as String? ?? '',
-          avatar: avatarFromPath(data['avatar'] as String?),
+          name: profile.name.isEmpty ? (user.displayName ?? '') : profile.name,
+          phone: profile.phone,
+          avatar: profile.avatar,
         ));
       } else {
         emit(UpdateProfileLoaded(
           name: user.displayName ?? '',
           phone: '',
-          avatar: avatars.first,
+          avatar: UserAvatars.imageFromKeyOrPath(null),
         ));
       }
     } catch (e) {
@@ -72,14 +55,11 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         await user
             .updateDisplayName(name)
             .timeout(const Duration(seconds: 10));
-        await FirebaseFirestore.instance
-            .collection('profiles')
-            .doc(user.uid)
-            .set({
-          'name': name,
-          'phone': phone,
-          'avatar': avatar.path,
-        }).timeout(const Duration(seconds: 10));
+        await _repository.saveProfile(UserProfile(
+          name: name,
+          phone: phone,
+          avatarKey: UserAvatars.keyFromImage(avatar),
+        ));
       }
     } catch (_) {
     }

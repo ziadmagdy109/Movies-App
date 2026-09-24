@@ -10,10 +10,14 @@ final int id;
   });
 
   factory SuggestedMovieModel.fromJson(Map<String, dynamic> json) {
+    final Object? rawRating = json['rating'];
+    final Object? rawId = json['id'];
     return SuggestedMovieModel(
-      id: json['id'],
-      image: json['medium_cover_image'],
-      rating: (json['rating'] as num).toDouble(),
+      id: rawId is num ? rawId.toInt() : 0,
+      image: json['medium_cover_image'] as String? ?? '',
+      rating: rawRating is num
+          ? rawRating.toDouble()
+          : num.tryParse('${rawRating ?? ''}')?.toDouble() ?? 0,
     );
   }
 }

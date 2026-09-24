@@ -23,11 +23,15 @@ class MovieInfoRow extends StatelessWidget {
         children: [
           widget,
           SizedBox(width: 10.w),
-          Text(
-            text,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight(700),
-              color: AppColors.white,
+          Flexible(
+            child: Text(
+              text,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                fontWeight: FontWeight.w700,
+                color: AppColors.white,
+              ),
             ),
           ),
         ],

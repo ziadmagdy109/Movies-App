@@ -20,6 +20,9 @@ class GoogleSignInCubit extends Cubit<GoogleSignInState> {
   GoogleSignInCubit() : super(GoogleSignInInitial());
 
   final FireBaseServices _services = FireBaseServices();
+
+  String? userEmail;
+
   Future<void> signInWithGoogle() async {
     emit(GoogleSignInLoading());
     print("Loading..");
@@ -28,6 +31,7 @@ class GoogleSignInCubit extends Cubit<GoogleSignInState> {
       final userCredential = await _services.signInWithGoogle();
 
       if (userCredential != null) {
+        userEmail = userCredential.user?.email;
         emit(GoogleSignInSuccess());
         print("Scuess");
       } else {

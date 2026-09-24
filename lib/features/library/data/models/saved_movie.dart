@@ -49,7 +49,9 @@ class SavedMovie {
       id: id,
       title: details.title_long,
       image: details.large_cover_image,
-      rating: (details.rating as num).toDouble(),
+      rating: details.rating is num
+          ? (details.rating as num).toDouble()
+          : num.tryParse('${details.rating ?? ''}')?.toDouble() ?? 0,
     );
   }
 

@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:movies_app/features/profile/data/models/user_profile.dart';
+import 'package:movies_app/features/profile/data/repository/profile_repository.dart';
 
 class FireBaseServices {
   Future<bool> signUpWithEmailAndPassword(
@@ -10,6 +11,7 @@ class FireBaseServices {
     String password,
     String name,
     String phone,
+    String avatarKey,
   ) async {
     try {
       final UserCredential credential =
@@ -21,10 +23,9 @@ class FireBaseServices {
       final User? user = credential.user;
       if (user != null) {
         await user.updateDisplayName(name);
-        await FirebaseFirestore.instance
-            .collection('profiles')
-            .doc(user.uid)
-            .set({'name': name, 'phone': phone});
+        await ProfileRepository().saveProfile(
+          UserProfile(name: name, phone: phone, avatarKey: avatarKey),
+        );
       }
       return true;
     } on FirebaseAuthException catch (e) {

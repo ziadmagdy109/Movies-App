@@ -4,6 +4,7 @@ import 'package:movies_app/core/routing/app_route_name.dart';
 import 'package:movies_app/main.dart';
 
 import '../../../../core/gen/assets.gen.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../model/suggestions_model.dart';
 class SuggestionMovie extends StatelessWidget {
   final SuggestedMovieModel? movie;
@@ -13,7 +14,13 @@ class SuggestionMovie extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigatorKey.currentState?.pushNamed(AppRouteName.movieDetails,arguments: movie?.id);
+        final int? id = movie?.id;
+        if (id != null && id > 0) {
+          navigatorKey.currentState?.pushNamed(
+            AppRouteName.movieDetails,
+            arguments: id,
+          );
+        }
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14.r),
@@ -21,8 +28,12 @@ class SuggestionMovie extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             movie?.image.isNotEmpty == true
-                ? Image.network(movie!.image, fit: BoxFit.cover)
-                : Icon(Icons.error),
+                ? Image.network(
+                    movie!.image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, __, ___) => _placeholder(),
+                  )
+                : _placeholder(),
             Positioned(
               top: 8.h,
               left: 8.w,
@@ -51,6 +62,18 @@ class SuggestionMovie extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _placeholder() {
+    return Container(
+      color: AppColors.navbarColor,
+      alignment: Alignment.center,
+      child: Icon(
+        Icons.movie,
+        color: AppColors.mainSubText,
+        size: 28.sp,
       ),
     );
   }
