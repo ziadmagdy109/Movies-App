@@ -6,26 +6,52 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
 import 'package:movies_app/core/routing/app_routes.dart';
+import 'package:movies_app/core/services/auth_preferences.dart';
 import 'package:movies_app/core/theme/app_theme.dart';
+import 'package:movies_app/features/Home/data/repository/movies_repository.dart';
+import 'package:movies_app/features/Home/data/service/movies_web_service.dart';
+import 'package:movies_app/features/Home/presentation/cubit/movies_cubit.dart';
+import 'package:movies_app/features/Layout/presentation/cubit/layout_cubit.dart';
+import 'package:movies_app/features/Layout/presentation/views/layout_view.dart';
 import 'package:movies_app/features/library/data/repository/user_library_repository.dart';
 import 'package:movies_app/features/library/presentation/cubit/user_library_cubit.dart';
+import 'package:movies_app/features/Splash/splash_screen.dart';
 
 import 'firebase_options.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await GoogleSignIn.instance.initialize(
     serverClientId:
         "85025048975-bmhhjqi9d64752kbtitpbjqlb9dev0ge.apps.googleusercontent.com",
   ); //Aud
-  runApp(const MyApp());
+  final Widget home;
+  if (await AuthPreferences.isLoggedIn()) {
+    home = MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => LayoutCubit()),
+        BlocProvider(
+          create: (context) => MoviesCubit(
+            moviesRepository: MoviesRepository(
+              moviesWebService: MoviesWebService(),
+            ),
+          )..getMovies("Action"),
+        ),
+      ],
+      child: LayoutView(),
+    );
+  } else {
+    home = const SplashScreen();
+  }
+  runApp(MyApp(home: home));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final Widget? home;
+  const MyApp({super.key, this.home});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +69,8 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         child: MaterialApp(
           theme: AppTheme.themeData,
-          initialRoute: AppRouteName.initial,
+          initialRoute: home == null ? AppRouteName.initial : null,
+          home: home,
           onGenerateRoute: AppRoutes.onGenerateRoute,
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,

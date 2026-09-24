@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
+import 'package:movies_app/core/services/auth_preferences.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/core/widgets/custom_button.dart';
 import 'package:movies_app/main.dart';
@@ -248,7 +249,8 @@ class _ProfileViewState extends State<ProfileView>
                                 text: 'Exit',
                                 onPressed: state is SignOutLoading
                                     ? null
-                                    : () {
+                                    : () async {
+                                  await AuthPreferences.clearEmail();
                                   context.read<SignOutCubit>().signOut();
                                 },
                               );

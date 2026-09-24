@@ -14,8 +14,10 @@ class MoviesDetailsCubit extends Cubit<MoviesDetailsState> {
       final movieDetailsList = await movieDetailsRepository.getMovieDetails(
         movieId,
       );
+      if (isClosed) return;
       emit(MoviesDetailsLoaded(moviesDetails: movieDetailsList));
     } catch (e) {
+      if (isClosed) return;
       emit(MoviesDetailsFailure(msg: e.toString()));
     }
   }

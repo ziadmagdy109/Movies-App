@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
+import 'package:movies_app/core/services/auth_preferences.dart';
 import 'package:movies_app/core/theme/app_colors.dart';
 import 'package:movies_app/core/theme/app_strings.dart';
 import 'package:movies_app/core/widgets/custom_button.dart';
@@ -111,6 +112,7 @@ class _LoginViewState extends State<LoginView> {
                     }
                     if (state is SignInSuccess) {
                       EasyLoading.dismiss();
+                      await AuthPreferences.saveEmail(_emailController.text);
                       navigatorKey.currentState!.pushReplacementNamed(
                         AppRouteName.layout,
                       );
@@ -149,12 +151,17 @@ class _LoginViewState extends State<LoginView> {
                 OrDivider(),
                 SizedBox(height: 28),
                 BlocConsumer<GoogleSignInCubit, GoogleSignInState>(
-                  listener: (context, state) {
+                  listener: (context, state) async {
                     if (state is GoogleSignInLoading) {
                       EasyLoading.show(status: 'Loading...');
                     }
                     if (state is GoogleSignInSuccess) {
                       EasyLoading.dismiss();
+                      final String? email =
+                          context.read<GoogleSignInCubit>().userEmail;
+                      if (email != null && email.isNotEmpty) {
+                        await AuthPreferences.saveEmail(email);
+                      }
                       navigatorKey.currentState!.pushReplacementNamed(
                         AppRouteName.layout,
                       );

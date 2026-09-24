@@ -1,4 +1,4 @@
-  import 'package:bloc/bloc.dart';
+import 'package:bloc/bloc.dart';
 import 'package:movies_app/features/MovieDetails/presentation/cubit/suggestions_state.dart';
 
 import '../../repo/movie_details_repo.dart';
@@ -11,8 +11,10 @@ class SuggestionsCubit extends Cubit<SuggestionsState> {
     emit(SuggestionsLoading());
     try {
       final movieDetailsList = await movieDetailsRepository.getMovieSuggestions(movieId);
+      if (isClosed) return;
       emit(SuggestionsLoaded(suggestionMovies: movieDetailsList));
     } catch (e) {
+      if (isClosed) return;
       emit(SuggestionsFailure(msg: e.toString()));
     }
   }

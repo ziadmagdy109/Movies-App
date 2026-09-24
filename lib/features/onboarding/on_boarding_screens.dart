@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/gen/assets.gen.dart';
 import 'package:movies_app/core/routing/app_route_name.dart';
+import 'package:movies_app/core/services/auth_preferences.dart';
 import 'package:movies_app/core/theme/app_strings.dart';
 import 'package:movies_app/features/OnBoarding/on_boarding_screen.dart';
 import 'package:movies_app/main.dart';
@@ -90,7 +91,8 @@ class _OnBoardingScreensState extends State<OnBoardingScreens> {
     );
   }
 
-  void _onFinish() {
+  Future<void> _onFinish() async {
+    await AuthPreferences.setOnBoardingSeen();
     navigatorKey.currentState!.pushReplacementNamed(AppRouteName.login);
   }
 

@@ -13,6 +13,7 @@ import 'package:movies_app/core/widgets/custom_text_form_field.dart';
 import 'package:movies_app/features/Auth/presentation/widgets/have_account.dart';
 import 'package:movies_app/features/Auth/presentation/widgets/language_switcher.dart';
 import 'package:movies_app/features/Auth/presentation/widgets/select_avatar.dart';
+import 'package:movies_app/features/profile/data/models/user_profile.dart';
 import 'package:movies_app/main.dart';
 import '../../../../core/utils/validation_rules.dart';
 import '../cubit/signup_cubit.dart';
@@ -37,6 +38,8 @@ class _RegisterViewState extends State<RegisterView> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
+  String _selectedAvatarKey = UserAvatars.defaultKey;
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -55,6 +58,7 @@ class _RegisterViewState extends State<RegisterView> {
             email: _emailController.text,
             password: _passwordController.text,
             phone: _phoneController.text,
+            avatarKey: _selectedAvatarKey,
           );
     }
   }
@@ -75,7 +79,14 @@ class _RegisterViewState extends State<RegisterView> {
             child: Column(
               spacing: 24,
               children: [
-                SelectAvatar(),
+                SelectAvatar(
+                  selectedKey: _selectedAvatarKey,
+                  onSelected: (key) {
+                    setState(() {
+                      _selectedAvatarKey = key;
+                    });
+                  },
+                ),
                 CustomTextFormField(
                   controller: _nameController,
                   validator: _validationRules.fullName,
